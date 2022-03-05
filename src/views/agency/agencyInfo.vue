@@ -13,8 +13,8 @@
       </div>
       <div class="search">
         <label>代理ID</label>
-        <input v-model="searchValue" placeholder="请输入代理ID/账号" />
-        <el-button size="small" type="primary" @click="searchHandle()">搜索</el-button>
+        <el-input v-model="searchValue" placeholder="请输入代理ID" style="width: 200px"></el-input>
+        <el-button size="small" type="primary" @click="searchHandle()" style="width: 100px">搜索</el-button>
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
@@ -142,7 +142,7 @@ export default {
     label {
       line-height: 40px;
     }
-    input {
+    .el-input {
       margin: 0 20px 0 10px;
     }
   }
