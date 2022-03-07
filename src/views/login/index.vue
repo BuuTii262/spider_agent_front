@@ -86,6 +86,9 @@ export default {
     },
   },
   methods: {
+    setname(){
+      localStorage.setItem(username)
+    },
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";

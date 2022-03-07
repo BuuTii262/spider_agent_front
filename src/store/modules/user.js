@@ -37,6 +37,7 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.user_token)
         setToken(data.user_token)
+        commit('SET_NAME',userInfo)
         resolve()
       }).catch(error => {
         reject(error)
@@ -45,38 +46,32 @@ const actions = {
   },
 
   // get user info
-  // getInfo({ commit, state }) {
-  //   return new Promise((resolve, reject) => {
-  //     getInfo(state.token).then(response => {
-  //       const { data } = response
-
-  //       if (!data) {
-  //         return reject('Verification failed, please Login again.')
-  //       }
-
-  //       const { name, avatar } = data
-
-  //       commit('SET_NAME', name)
-  //       commit('SET_AVATAR', avatar)
-  //       resolve(data)
-  //     }).catch(error => {
-  //       reject(error)
-  //     })
-  //   })
-  // },
-
-  // user logout
-  logout({ commit, state }) {
+  getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
+      getInfo(state.token).then(response => {
+        const { data } = response
+
+        if (!data) {
+          return reject('Verification failed, please Login again.')
+        }
+
+        const { name, avatar } = data
+
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  // user logout
+  logout({ commit }) {
+      commit('SET_TOKEN', '')
+      commit('SET_NAME', '')
+      setToken('')
+      resolve()
   },
 
   // remove token
