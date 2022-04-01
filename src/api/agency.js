@@ -1,9 +1,11 @@
 import request from '@/utils/request'
 
 export function getAgencyList(data) {
+  console.log(data)
+  console.log(20)
   return request({
-    url: '/agent/agent_list',
-    method: 'post',
+    url: '/agents/directs',
+    method: 'get',
     data
   })
 }

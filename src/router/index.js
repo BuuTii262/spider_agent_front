@@ -33,7 +33,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    name:'Login',
+    name: 'Login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
@@ -50,57 +50,57 @@ export const constantRoutes = [
     children: [{
       path: 'finance',
       name: '首页',
-      component: () => import('@/views/agency/agencyInfo'),
+      component: () => import('@/views/agency/agencyList'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
 
-  {
-    path: '/agency',
-    component: Layout,
-    redirect: '/agency/agencyList',
-    name: '代理管理',
-    alwaysShow: true,
-    meta: { title: '代理管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: '/agencyList',
-        name: '代理列表',
-        component: () => import('@/views/agency/agencyList'),
-        meta: { title: '代理列表', icon: 'table' }
-      },
-      {
-        path: '/finance',
-        name: '理财报表',
-        component: () => import('@/views/agency/agencyInfo'),
-        meta: { title: '理财报表' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/property',
-    component: Layout,
-    redirect: '/property/rechageAudit',
-    name: '资产管理',
-    alwaysShow: true,
-    meta: { title: '资产管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'rechageAudit',
-        name: '充值审核',
-        component: () => import('@/views/property/rechageAudit'),
-        meta: { title: '充值审核', icon: 'table' }
-      },
-      {
-        path: 'withdrawalAudit',
-        name: '提现审核',
-        component: () => import('@/views/property/withdrawalAudit'),
-        meta: { title: '提现审核', icon: 'table' }
-      },
+  // {
+  //   path: '/agency',
+  //   component: Layout,
+  //   redirect: '/agency/agencyList',
+  //   name: '代理管理',
+  //   alwaysShow: true,
+  //   meta: { title: '代理管理', icon: 'el-icon-s-help' },
+  //   children: [
+  //     {
+  //       path: '/agencyList',
+  //       name: '代理列表',
+  //       component: () => import('@/views/agency/agencyList'),
+  //       meta: { title: '代理列表', icon: 'table' }
+  //     },
+  //     {
+  //       path: '/finance',
+  //       name: '理财报表',
+  //       component: () => import('@/views/agency/agencyInfo'),
+  //       meta: { title: '理财报表' },
+  //       hidden: true
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/property',
+  //   component: Layout,
+  //   redirect: '/property/rechageAudit',
+  //   name: '资产管理',
+  //   alwaysShow: true,
+  //   meta: { title: '资产管理', icon: 'el-icon-s-help' },
+  //   children: [
+  //     {
+  //       path: 'rechageAudit',
+  //       name: '充值审核',
+  //       component: () => import('@/views/property/rechageAudit'),
+  //       meta: { title: '充值审核', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'withdrawalAudit',
+  //       name: '提现审核',
+  //       component: () => import('@/views/property/withdrawalAudit'),
+  //       meta: { title: '提现审核', icon: 'table' }
+  //     },
 
-    ]
-  },
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
