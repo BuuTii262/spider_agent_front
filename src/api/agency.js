@@ -4,9 +4,8 @@ export function getAgencyList(data) {
   console.log(data)
   console.log(20)
   return request({
-    url: '/agents/directs',
+    url: '/agents/directs' + data,
     method: 'get',
-    data
   })
 }
 //代理转移

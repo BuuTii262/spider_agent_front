@@ -19,27 +19,28 @@
           </el-date-picker>
         </el-form-item>
         <div class="buttonBox" style="margin-bottom:22px">
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
-          <el-button type="primary" @click="addMember()">添加</el-button>
-          <el-button type="primary" @click="mtransferA()">会员转代理</el-button>
+          <el-button type="primary" @click="searchHandle()">搜索</el-button>
+          <!-- <el-button type="primary" @click="addMember()">添加</el-button>
+          <el-button type="primary" @click="mtransferA()">会员转代理</el-button> -->
         </div>
       </el-form>
     </div>
     <div class="wrap">
       <div class="title">数据汇总</div>
       <div class="data-group">
-        <div class="data-item">团队总人数：100000</div>
-        <div class="data-item">总充值：100000</div>
-        <div class="data-item">总提现：100000</div>
-        <div class="data-item">提现中：100000</div>
-        <div class="data-item">订单总金额：100000</div>
-        <div class="data-item">总赠送：100000</div>
-        <div class="data-item">活跃总人数：100000</div>
-        <div class="data-item">新增总人数：100000</div>
+        <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
+        <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
+        <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
+        <div class="data-item">订单总数：{{ totalData.order_count }}</div>
+        <div class="data-item">总赠送：{{ totalData.income }}</div>
+        <div class="data-item">活跃总人数：{{ totalData.order_member_count }}</div>
+        <div class="data-item">新增总人数：{{ totalData.new_member }}</div>
       </div>
     </div>
     <div class="wrap">
       <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row>
+        <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
         <el-table-column label="代理账号" align="center" prop="username">
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
@@ -176,6 +177,7 @@ export default {
         user_name: '',
         password: '',
       },
+      totalData: {},
       modelPageOptions: {
         page: 1, //列表 -- 当前页码
         total: 0, //列表 -- 数据总数
@@ -205,39 +207,36 @@ export default {
     this.fetchData()
   },
   methods: {
+    searchHandle() {
+      this.query.page = 1
+      this.fetchData()
+    },
     //调整每页展示的条数
     handleSizeChange(val) {
-      this.modelPageOptions.pageSize = val
-      this.getList()
+      this.query.page_size = val
+      console.log(val)
+      this.fetchData()
     },
     //当前的页数
     handleCurrentChange(val) {
-      this.modelPageOptions.page = val
-      this.getList()
+      this.query.page = val
+      this.fetchData()
     },
     fetchData() {
       console.log(this.dateValue)
-
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
-        this.query.id = this.addParams.id
+        myParams += `&id=${this.addParams.id}`
       }
-      if (this.dateValue) {
-        this.query.start_date = this.dateValue[0] + ' 00:00:00'
-        this.query.end_date = this.dateValue[1] + ' 23:59:59'
+      if (this.dateValue.length) {
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
       }
       this.listLoading = true
-
-      if (this.query.id !== null && this.query.id !== '') {
-        this.query.id = Number(this.query.id)
-      }
-      var data = this.query
-      console.log(data)
-
-      getAgencyList(data).then((res) => {
+      getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
           this.modelPageOptions.total = res.data.total
           this.dataList = res.data.agents
-          console.log()
+          this.totalData = res.data.statistics
           this.listLoading = false
         } else {
           this.$message({
