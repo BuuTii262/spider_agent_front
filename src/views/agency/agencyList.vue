@@ -33,7 +33,7 @@
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
-        <div class="data-item">总赠送：{{ totalData.income }}</div>
+        <div class="data-item">总收益：{{ totalData.income }}</div>
         <div class="data-item">活跃总人数：{{ totalData.order_member_count }}</div>
         <div class="data-item">新增总人数：{{ totalData.new_member }}</div>
       </div>
@@ -207,6 +207,7 @@ export default {
     this.fetchData()
   },
   methods: {
+    //If click it will search that ID's lists
     searchID(row, event, column) {   
       // console.log(row,  event,  column)
       this.addParams.id = row.id;
