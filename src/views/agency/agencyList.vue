@@ -31,6 +31,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">充值差：{{ totalData.benefit }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总赠送：{{ totalData.income }}</div>
@@ -40,14 +41,14 @@
     </div>
     <div class="wrap">
       <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
-        <el-table-column label="代理ID" align="center" >
+        <el-table-column label="代理ID" align="center" width="80">
           <template slot-scope="scope">
             <div :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.id }}</div> 
           </template>
         </el-table-column>
-        <el-table-column label="代理账号" align="center" prop="username" >
+        <el-table-column label="代理账号" align="center" prop="username" width="140">
         </el-table-column>
-        <el-table-column label="团队总人数" align="center" prop="member_count">
+        <el-table-column label="团队总人数" align="center" prop="member_count" width="100">
         </el-table-column>
         <el-table-column label="总充值" align="center" prop="total_deposit">
         </el-table-column>
@@ -69,7 +70,12 @@
         <!-- </el-table-column> -->
         <el-table-column label="活跃人数" align="center" prop="order_member_count">
         </el-table-column>
-        <el-table-column label="新增人数" align="center" prop="new_member">
+        <el-table-column label="新增人数" align="center" prop="new_member" width="80">
+        </el-table-column>
+        <el-table-column label="注册日期" align="center">
+          <template slot-scope="scope">
+            <div>{{ scope.row.created_at.split(' ')[0] }}</div> 
+          </template>
         </el-table-column>
       </el-table>
       
