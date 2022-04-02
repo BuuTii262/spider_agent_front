@@ -36,7 +36,6 @@
               auto-complete="on"
             />
           </el-form-item>
-
           <el-form-item prop="password">
             <span class="svg-container">
               <svg-icon icon-class="password" />
@@ -265,6 +264,19 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+}
+.el-tabs__nav-wrap::after {
+  background-color: transparent;
+}
+.el-tabs__item {
+  width: 40px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  color: #fff;
+}
+.el-tabs__active-bar {
+  width: 38px !important;
 }
 </style>
 
