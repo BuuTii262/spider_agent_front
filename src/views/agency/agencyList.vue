@@ -31,6 +31,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">充值差：{{ totalData.benefit }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
@@ -40,10 +41,14 @@
     </div>
     <div class="wrap">
       <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
-        <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
-        <el-table-column label="代理账号" align="center" prop="username" >
+        <el-table-column label="代理ID" align="center" width="80">
+          <template slot-scope="scope">
+            <div :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.id }}</div> 
+          </template>
         </el-table-column>
-        <el-table-column label="团队总人数" align="center" prop="member_count">
+        <el-table-column label="代理账号" align="center" prop="username" width="140">
+        </el-table-column>
+        <el-table-column label="团队总人数" align="center" prop="member_count" width="100">
         </el-table-column>
         <el-table-column label="总充值" align="center" prop="total_deposit">
         </el-table-column>
@@ -169,7 +174,10 @@ export default {
       editDialog: false,
       addDialog: false,
       memberDialog: false,
-      dateValue: [ new Date().toISOString().slice(0, 10), new Date().toISOString().slice(0, 10)],
+      dateValue: [
+        new Date().toISOString().slice(0, 10),
+        new Date().toISOString().slice(0, 10),
+      ],
       createForm: {
         agent_id: '',
         password: '',
@@ -209,12 +217,17 @@ export default {
     this.fetchData()
   },
   methods: {
+<<<<<<< HEAD
     //If click it will search that ID's lists
     searchID(row, event, column) {   
+=======
+    searchID(row, event, column) {
+>>>>>>> c3b65fd856609bfc5d8768dabd94223c20cf0f06
       // console.log(row,  event,  column)
-      this.addParams.id = row.id;
+      if (row.member_count === 0) return
+      this.addParams.id = row.id
       this.fetchData()
-     },
+    },
     searchHandle() {
       this.query.page = 1
       this.fetchData()
@@ -390,5 +403,9 @@ export default {
       margin-right: 40px;
     }
   }
+}
+.blue {
+  color: blue;
+  text-decoration: underline;
 }
 </style>

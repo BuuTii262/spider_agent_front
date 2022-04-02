@@ -1,39 +1,114 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
-      label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">Login Form</h3>
       </div>
+      <el-tabs class="tabs" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="手机" name="first">
+          <el-form-item prop="username">
+            <span class="svg-container">
+              <el-select v-model="code" :label="code" placeholder="Select">
+                <el-option
+                  v-for="item in aaaa"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                >
+                </el-option>
+              </el-select>
+            </span>
+            <el-input
+              class="phin"
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="手机号码"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+            />
+          </el-form-item>
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              placeholder="登录密码"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon
+                :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+              />
+            </span>
+          </el-form-item>
+        </el-tab-pane>
+        <el-tab-pane label="邮箱" name="second">
+          <el-form-item prop="username">
+            <span class="svg-container"> </span>
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="邮箱号码"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+            />
+          </el-form-item>
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="Username" name="username" type="text"
-          tabindex="1" auto-complete="on" />
-      </el-form-item>
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              placeholder="登录密码"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon
+                :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+              />
+            </span>
+          </el-form-item>
+        </el-tab-pane>
+      </el-tabs>
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-          placeholder="Password" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin">Login</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleLogin"
+      >
+        登录</el-button
+      >
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right: 20px">username: admin</span>
         <span> password: any</span>
       </div>
-
     </el-form>
   </div>
 </template>
@@ -41,6 +116,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import Md5 from '@/utils/md5'
+import phoneCodes from '../../data/phoneCodes.json'
 
 export default {
   name: 'Login',
@@ -59,7 +135,15 @@ export default {
         callback()
       }
     }
+    const aaaa = phoneCodes
+      .map((item) => {
+        return item.dialingCode
+      })
+      .sort((a, b) => a - b)
     return {
+      aaaa,
+      code: '+86',
+      activeName: 'first',
       loginForm: {
         username: '',
         password: '',
@@ -105,11 +189,13 @@ export default {
           this.loading = true
           console.log(this.loginForm.username)
           console.log(this.loginForm.username.indexOf('@'))
-          this.loginForm.password = this.$md5(this.loginForm.password)
+          this.loginForm.password =
+            this.$md5(this.loginForm.password) +
+            Math.round(new Date().getTime() / 1000).toString()
           this.loginForm.username =
             this.loginForm.username.indexOf('@') !== -1
               ? this.loginForm.username
-              : '+86-' + this.loginForm.username
+              : this.code + '-' + this.loginForm.username
           this.$store
             .dispatch('user/login', this.loginForm)
             .then(() => {
@@ -118,6 +204,8 @@ export default {
             })
             .catch(() => {
               this.loading = false
+              this.loginForm.username = ''
+              this.loginForm.password = ''
             })
         } else {
           console.log('error submit!!')
@@ -145,11 +233,14 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  .el-select {
+    width: 100px;
+  }
+
   .el-input {
     display: inline-block;
     height: 47px;
     width: 85%;
-
     input {
       background: transparent;
       border: 0px;
@@ -173,6 +264,19 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+}
+.el-tabs__nav-wrap::after {
+  background-color: transparent;
+}
+.el-tabs__item {
+  width: 40px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  color: #fff;
+}
+.el-tabs__active-bar {
+  width: 38px !important;
 }
 </style>
 
@@ -237,5 +341,16 @@ $light_gray: #eee;
     cursor: pointer;
     user-select: none;
   }
+}
+.phin {
+  width: 270px;
+  margin-left: 70px;
+}
+.tabs {
+  color: #fff !important;
+}
+#tab-first,
+#tab-second {
+  color: #fff;
 }
 </style>
