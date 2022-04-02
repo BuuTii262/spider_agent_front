@@ -167,7 +167,7 @@ export default {
       editDialog: false,
       addDialog: false,
       memberDialog: false,
-      dateValue: [],
+      dateValue: [ new Date().toISOString().slice(0, 10), new Date().toISOString().slice(0, 10)],
       createForm: {
         agent_id: '',
         password: '',
