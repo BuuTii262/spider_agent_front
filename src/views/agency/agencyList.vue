@@ -39,9 +39,9 @@
       </div>
     </div>
     <div class="wrap">
-      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row>
+      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
         <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
-        <el-table-column label="代理账号" align="center" prop="username">
+        <el-table-column label="代理账号" align="center" prop="username" >
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
         </el-table-column>
@@ -62,7 +62,7 @@
         <!-- <el-table-column label="总佣金" align="center" prop="HasMember">
         </el-table-column>
         <el-table-column label="团队佣金" align="center" prop="HasMember"> -->
-        </el-table-column>
+        <!-- </el-table-column> -->
         <el-table-column label="活跃人数" align="center" prop="order_member_count">
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
@@ -167,7 +167,7 @@ export default {
       editDialog: false,
       addDialog: false,
       memberDialog: false,
-      dateValue: [],
+      dateValue: [ new Date().toISOString().slice(0, 10), new Date().toISOString().slice(0, 10)],
       createForm: {
         agent_id: '',
         password: '',
@@ -207,6 +207,11 @@ export default {
     this.fetchData()
   },
   methods: {
+    searchID(row, event, column) {   
+      // console.log(row,  event,  column)
+      this.addParams.id = row.id;
+      this.fetchData()
+     },
     searchHandle() {
       this.query.page = 1
       this.fetchData()
@@ -226,7 +231,7 @@ export default {
       console.log(this.dateValue)
       let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
-        myParams += `&id=${this.addParams.id}`
+        myParams += `&uid=${this.addParams.id}`
       }
       if (this.dateValue.length) {
         myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
