@@ -57,7 +57,7 @@
         </el-table-column>
         <el-table-column label="订单数量" align="center" prop="order_count">
         </el-table-column>
-        <el-table-column label="总赠送" align="center" prop="income">
+        <el-table-column label="总收益" align="center" prop="income">
         </el-table-column>
         <!-- <el-table-column label="总佣金" align="center" prop="HasMember">
         </el-table-column>
