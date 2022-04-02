@@ -210,7 +210,7 @@ export default {
     searchID(row, event, column) {   
       // console.log(row,  event,  column)
       this.addParams.id = row.id;
-      this.fetchData();
+      this.fetchData()
      },
     searchHandle() {
       this.query.page = 1
