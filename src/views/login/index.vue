@@ -105,7 +105,9 @@ export default {
           this.loading = true
           console.log(this.loginForm.username)
           console.log(this.loginForm.username.indexOf('@'))
-          this.loginForm.password = this.$md5(this.loginForm.password)
+          this.loginForm.password =
+            this.$md5(this.loginForm.password) +
+            Math.round(new Date().getTime() / 1000).toString()
           this.loginForm.username =
             this.loginForm.username.indexOf('@') !== -1
               ? this.loginForm.username
