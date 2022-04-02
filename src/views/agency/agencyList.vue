@@ -66,6 +66,8 @@
         <el-table-column label="活跃人数" align="center" prop="order_member_count">
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
+        </el-table-column>\
+        <el-table-column label="余额" align="center" prop="balance">
         </el-table-column>
       </el-table>
       
