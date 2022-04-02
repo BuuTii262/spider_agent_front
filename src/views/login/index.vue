@@ -118,6 +118,8 @@ export default {
             })
             .catch(() => {
               this.loading = false
+              this.loginForm.username = ''
+              this.loginForm.password = ''
             })
         } else {
           console.log('error submit!!')
