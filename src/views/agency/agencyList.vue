@@ -167,7 +167,7 @@ export default {
       editDialog: false,
       addDialog: false,
       memberDialog: false,
-      dateValue: [ new Date().toISOString().slice(0, 10), new Date().toISOString().slice(0, 10)],
+      dateValue: [],
       createForm: {
         agent_id: '',
         password: '',
@@ -210,6 +210,7 @@ export default {
     searchID(row, event, column) {   
       // console.log(row,  event,  column)
       this.addParams.id = row.id;
+      this.fetchData();
      },
     searchHandle() {
       this.query.page = 1
