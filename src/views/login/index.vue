@@ -115,12 +115,12 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
-import Md5 from "@/utils/md5";
-import phoneCodes from "../../data/phoneCodes.json";
+import { validUsername } from '@/utils/validate'
+import Md5 from '@/utils/md5'
+import phoneCodes from '../../data/phoneCodes.json'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     // const validateUsername = (rule, value, callback) => {
     //   if (!validUsername(value)) {
@@ -131,98 +131,91 @@ export default {
     // };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        callback(new Error('The password can not be less than 6 digits'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     const aaaa = phoneCodes
       .map((item) => {
-        return item.dialingCode;
+        return item.dialingCode
       })
-      .sort((a, b) => a - b);
+      .sort((a, b) => a - b)
     return {
       aaaa,
-      code: "+86",
-      activeName: "first",
+      code: '+86',
+      activeName: 'first',
       loginForm: {
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", validator: "请输入用户名" },
+          { required: true, trigger: 'blur', validator: '请输入用户名' },
         ],
         password: [
-          { required: true, trigger: "blur", validator: validatePassword },
+          { required: true, trigger: 'blur', validator: validatePassword },
         ],
       },
       loading: false,
-      passwordType: "password",
+      passwordType: 'password',
       redirect: undefined,
-    };
+    }
   },
   watch: {
     $route: {
       handler: function (route) {
-        this.redirect = route.query && route.query.redirect;
+        this.redirect = route.query && route.query.redirect
       },
       immediate: true,
     },
   },
   methods: {
     setname() {
-      localStorage.setItem(username);
+      localStorage.setItem(username)
     },
     showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
       } else {
-        this.passwordType = "password";
+        this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
-      });
+        this.$refs.password.focus()
+      })
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-<<<<<<< HEAD
           this.loading = true
           console.log(this.loginForm.username)
           console.log(this.loginForm.username.indexOf('@'))
           this.loginForm.password =
             this.$md5(this.loginForm.password) +
             Math.round(new Date().getTime() / 1000).toString()
-=======
-          this.loading = true;
-          console.log(this.loginForm.username);
-          console.log(this.loginForm.username.indexOf("@"));
-          this.loginForm.password = this.$md5(this.loginForm.password);
->>>>>>> 29eb53457fd1d58ac96db6d32a65042144514655
           this.loginForm.username =
-            this.loginForm.username.indexOf("@") !== -1
+            this.loginForm.username.indexOf('@') !== -1
               ? this.loginForm.username
-              : this.code + "-" + this.loginForm.username;
+              : this.code + '-' + this.loginForm.username
           this.$store
-            .dispatch("user/login", this.loginForm)
+            .dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
             })
             .catch(() => {
-              this.loading = false;
-              this.loginForm.username = "";
-              this.loginForm.password = "";
-            });
+              this.loading = false
+              this.loginForm.username = ''
+              this.loginForm.password = ''
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
