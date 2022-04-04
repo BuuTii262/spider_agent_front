@@ -75,6 +75,12 @@ export const constantRoutes = [
         name: '测试列表',
         component: () => import('@/views/agency/agencyTest'),
         meta: { title: '测试列表', icon: 'dashboard' },
+      },
+      {
+        path: '/agencyInviteCode',
+        name: '邀请码',
+        component: () => import('@/views/agency/agencyInviteCode'),
+        meta: { title: '邀请码', icon: 'dashboard' },
       }
     ]
   },

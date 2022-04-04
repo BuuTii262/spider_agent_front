@@ -7,7 +7,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    invite_code: '',
   }
 }
 
@@ -23,6 +24,9 @@ const mutations = {
   SET_NAME: (state, name) => {
     state.name = name
   },
+  SET_INVITE_CODE: (state, invite_code) => {
+    state.invite_code = invite_code
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -37,6 +41,9 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.user_token)
         setToken(data.user_token)
+        commit('SET_INVITE_CODE', data.invite_code)
+
+        // Cookies.set('invite_code', data.invite_code)
         commit('SET_NAME',userInfo)
         resolve()
       }).catch(error => {
@@ -55,10 +62,11 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { name, avatar, invite_code } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_INVITE_CODE', data.invite_code)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -70,6 +78,7 @@ const actions = {
   logout({ commit }) {
       commit('SET_TOKEN', '')
       commit('SET_NAME', '')
+      commit('SET_INVITE_CODE', '')
       setToken('')
       resolve()
   },
