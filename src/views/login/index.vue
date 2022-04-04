@@ -187,25 +187,25 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          console.log(this.loginForm.username)
-          console.log(this.loginForm.username.indexOf('@'))
-          this.loginForm.password =
-            this.$md5(this.loginForm.password) +
-            Math.round(new Date().getTime() / 1000).toString()
-          this.loginForm.username =
-            this.loginForm.username.indexOf('@') !== -1
-              ? this.loginForm.username
-              : this.code + '-' + this.loginForm.username
+          const postData = {
+            username:
+              this.loginForm.username.indexOf('@') !== -1
+                ? this.loginForm.username
+                : this.code + '-' + this.loginForm.username,
+            password:
+              this.$md5(this.loginForm.password) +
+              Math.round(new Date().getTime() / 1000).toString(),
+          }
+          localStorage.setItem('username', this.loginForm.username)
+
           this.$store
-            .dispatch('user/login', this.loginForm)
+            .dispatch('user/login', postData)
             .then(() => {
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })
             .catch(() => {
               this.loading = false
-              this.loginForm.username = ''
-              this.loginForm.password = ''
             })
         } else {
           console.log('error submit!!')

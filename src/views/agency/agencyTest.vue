@@ -33,12 +33,8 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
-<<<<<<< HEAD
-        <div class="data-item">订单总金额：{{ totalData.benefit }}</div>
-=======
         <div class="data-item">冲提差：{{ totalData.total_withdraw }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
->>>>>>> c229b26b21505f5b0230b11de3080e1b5ff11237
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
         <div class="data-item">活跃总人数：{{ totalData.order_member_count }}</div>
@@ -47,11 +43,7 @@
     </div>
     <div class="wrap">
       <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
-        <el-table-column label="代理ID" align="center">
-          <template slot-scope="scope">
-            <div :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.id }}</div>
-          </template>
-        </el-table-column>
+        <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
         <el-table-column label="代理账号" align="center" prop="username" >
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
@@ -246,7 +238,7 @@ export default {
     },
     fetchData() {
       console.log(this.dateValue)
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
+      let myParams = `?is_test=1&page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`
       }
@@ -385,10 +377,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.blue {
-  color: blue;
-  text-decoration: underline;
-}
 .wrap {
   background: #fff;
   border-radius: 8px;
