@@ -31,7 +31,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
-        <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
+        <div class="data-item">订单总金额：{{ totalData.benefit }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
         <div class="data-item">活跃总人数：{{ totalData.order_member_count }}</div>
