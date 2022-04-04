@@ -46,38 +46,38 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/finance',
+    redirect: '/agencyList',
     children: [{
-      path: 'finance',
-      name: '首页',
+      path: 'agencyList',
+      name: '代理列表',
       component: () => import('@/views/agency/agencyList'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '代理列表', icon: 'dashboard' },
+      hidden: true
     }]
   },
 
-  // {
-  //   path: '/agency',
-  //   component: Layout,
-  //   redirect: '/agency/agencyList',
-  //   name: '代理管理',
-  //   alwaysShow: true,
-  //   meta: { title: '代理管理', icon: 'el-icon-s-help' },
-  //   children: [
-  //     {
-  //       path: '/agencyList',
-  //       name: '代理列表',
-  //       component: () => import('@/views/agency/agencyList'),
-  //       meta: { title: '代理列表', icon: 'table' }
-  //     },
-  //     {
-  //       path: '/finance',
-  //       name: '理财报表',
-  //       component: () => import('@/views/agency/agencyInfo'),
-  //       meta: { title: '理财报表' },
-  //       hidden: true
-  //     }
-  //   ]
-  // },
+  {
+    path: '/agency',
+    component: Layout,
+    redirect: '/agency/agencyList',
+    name: '代理管理',
+    alwaysShow: true,
+    meta: { title: '代理管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: '/agencyList',
+        name: '代理列表',
+        component: () => import('@/views/agency/agencyList'),
+        meta: { title: '代理列表', icon: 'table' }
+      },
+      {
+        path: '/agencyTest',
+        name: '测试列表',
+        component: () => import('@/views/agency/agencyTest'),
+        meta: { title: '测试列表', icon: 'dashboard' },
+      }
+    ]
+  },
   // {
   //   path: '/property',
   //   component: Layout,

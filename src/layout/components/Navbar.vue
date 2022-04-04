@@ -5,10 +5,9 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <span>{{username}}</span>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <span>{{username}}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -27,21 +26,17 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
-  data(){
-    return{
-      username :this.$store.getters.name.username
+  data() {
+    return {
+      username: sessionStorage.getItem('username') || '',
     }
   },
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'name'
-    ])
+    ...mapGetters(['sidebar', 'avatar', 'name']),
   },
   methods: {
     toggleSideBar() {
@@ -50,13 +45,13 @@ export default {
     },
     logout() {
       // await this.$store.dispatch('user/logout')
-      document.cookie = 'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+      document.cookie =
+        'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;'
       // this.$router.push('/Login')
       location.reload()
     },
-  }
+  },
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -65,18 +60,18 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -103,10 +98,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

@@ -238,7 +238,7 @@ export default {
     },
     fetchData() {
       console.log(this.dateValue)
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
+      let myParams = `?is_test=1&page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`
       }
