@@ -28,7 +28,7 @@ import Hamburger from '@/components/Hamburger'
 export default {
   data() {
     return {
-      username: sessionStorage.getItem('username') || '',
+      username: localStorage.getItem('username') || '',
     }
   },
   components: {

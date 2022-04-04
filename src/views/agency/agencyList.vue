@@ -43,7 +43,11 @@
     </div>
     <div class="wrap">
       <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
-        <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
+        <el-table-column label="代理ID" align="center">
+          <template slot-scope="scope">
+            <div :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.id }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="代理账号" align="center" prop="username" >
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
@@ -377,6 +381,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.blue {
+  color: blue;
+  text-decoration: underline;
+}
 .wrap {
   background: #fff;
   border-radius: 8px;

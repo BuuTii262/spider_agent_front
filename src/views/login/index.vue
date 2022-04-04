@@ -196,7 +196,7 @@ export default {
               this.$md5(this.loginForm.password) +
               Math.round(new Date().getTime() / 1000).toString(),
           }
-          sessionStorage.setItem('username', this.loginForm.username)
+          localStorage.setItem('username', this.loginForm.username)
 
           this.$store
             .dispatch('user/login', postData)
