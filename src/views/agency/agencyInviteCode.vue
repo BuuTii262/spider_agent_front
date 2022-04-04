@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      inviteCode: "http://www.spiderexpro.com/register?invite=" + this.$store.state.user.invite_code,
+      inviteCode: "http://www.spiderexpro.com/register?invite=" + localStorage.getItem('invite_code'),
     };
   },
   created() {},

@@ -42,7 +42,7 @@ const actions = {
         commit('SET_TOKEN', data.user_token)
         setToken(data.user_token)
         commit('SET_INVITE_CODE', data.invite_code)
-
+        localStorage.setItem('invite_code', data.invite_code);
         // Cookies.set('invite_code', data.invite_code)
         commit('SET_NAME',userInfo)
         resolve()
