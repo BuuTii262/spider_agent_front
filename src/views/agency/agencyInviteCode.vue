@@ -14,17 +14,14 @@
 export default {
   data() {
     return {
-      inviteCode: "http://www.spiderexpro.com/register?invite=" + localStorage.getItem('invite_code'),
+      inviteCode: "https://www.spiderexpro.com/register?invite=" + localStorage.getItem('invite_code'),
     };
   },
   created() {},
   methods: {
     copyFunction() {
       var copyText = document.getElementById("copy_value");
-
       navigator.clipboard.writeText(copyText.innerHTML);
-
-      alert("Copied the text: " + copyText.innerHTML);
     },
   },
 };
