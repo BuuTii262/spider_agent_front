@@ -33,7 +33,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
-        <div class="data-item">冲提差：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">充提差：{{ totalData.total_withdraw }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
@@ -54,7 +54,7 @@
         </el-table-column>
         <el-table-column label="提现中" align="center" prop="total_deposit_pending">
         </el-table-column>
-        <el-table-column label="冲提差" align="center" prop="benifit">
+        <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
         <el-table-column label="订单金额" align="center" prop="order_amount">
         </el-table-column>

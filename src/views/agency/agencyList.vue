@@ -33,7 +33,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
-        <div class="data-item">冲提差：{{ totalData.benefit }}</div>
+        <div class="data-item">充提差：{{ totalData.benefit }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
@@ -58,7 +58,7 @@
         </el-table-column>
         <el-table-column label="提现中" align="center" prop="total_deposit_pending">
         </el-table-column>
-        <el-table-column label="冲提差" align="center" prop="benifit">
+        <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
         <el-table-column label="订单金额" align="center" prop="order_amount">
         </el-table-column>
@@ -73,8 +73,10 @@
         <el-table-column label="活跃人数" align="center" prop="order_member_count">
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
-        </el-table-column>\
+        </el-table-column>
         <el-table-column label="余额" align="center" prop="balance">
+        </el-table-column>
+        <el-table-column label="注册时间" align="center" prop="balance">
         </el-table-column>
       </el-table>
       
@@ -240,12 +242,12 @@ export default {
       this.query.page = val
       this.fetchData()
     },
-     tableRowClassName({row, rowIndex}) {
-        if (row.member_count > 0) {
-          console.log(row)
-          return 'success-row';
-        }
-        return '';
+    tableRowClassName({ row, rowIndex }) {
+      if (row.member_count > 0) {
+        console.log(row)
+        return 'success-row'
+      }
+      return ''
     },
     fetchData() {
       console.log(this.dateValue)
@@ -414,11 +416,11 @@ export default {
 }
 </style>
 <style>
-  .el-table .warning-row {
-    background: oldlace;
-  }
+.el-table .warning-row {
+  background: oldlace;
+}
 
-  .el-table .success-row {
-    background: #f0f9eb;
-  }
+.el-table .success-row {
+  background: #f0f9eb;
+}
 </style>
