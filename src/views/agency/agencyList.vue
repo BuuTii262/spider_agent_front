@@ -343,6 +343,7 @@ export default {
       if(localStorage.getItem("searchDate")){
         console.log(JSON.parse(localStorage.getItem("searchDate")));
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+        localStorage.removeItem("searchDate");
       }
     },
     //If click it will search that ID's lists
