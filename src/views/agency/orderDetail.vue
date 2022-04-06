@@ -218,7 +218,7 @@
 </template>
 
 <script>
-import { getAgencyList, getOrders } from "@/api/agency";
+import { getOrders } from "@/api/agency";
 
 export default {
   filters: {},

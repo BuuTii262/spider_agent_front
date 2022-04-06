@@ -85,7 +85,7 @@
         <el-table-column label="订单金额" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchOrderDetails(scope.row)"
+              @click="searchOrderDetailsWithOrderAmount(scope.row)"
               :class="scope.row.member_count > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_amount }}
@@ -95,7 +95,7 @@
         <el-table-column label="订单数量" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchOrderDetails(scope.row)"
+              @click="searchOrderDetailsWithMemberCount(scope.row)"
               :class="scope.row.member_count > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_count }}
@@ -347,7 +347,20 @@ export default {
       this.fetchData();
     },
 
-    searchOrderDetails(row) {
+    searchOrderDetailsWithOrderAmount(row) {
+      if(row.order_amount === 0){
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/orderDetail",
+        query: { id: row.id },
+      });
+    },
+    searchOrderDetailsWithMemberCount(row){
+      if(row.order_count === 0){
+        return false;
+      }
       console.log(row.id);
       this.$router.push({
         path: "/orderDetail",
