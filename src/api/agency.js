@@ -48,3 +48,12 @@ export function reportView(data) {
     data
   })
 }
+
+export function getOrders(data) {
+  console.log(data)
+  console.log(20)
+  return request({
+    url: '/agents/orders' + data,
+    method: 'get',
+  })
+}

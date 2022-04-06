@@ -1,11 +1,15 @@
 <template>
   <div class="app-container">
     <div class="search-wrap wrap">
-      <el-form style="display: flex;">
-        <el-form-item label="代理筛选" style="width:300px">
-          <el-input v-model="addParams.id" placeholder="请输入代理UID" style="width: 200px"></el-input>
+      <el-form style="display: flex">
+        <el-form-item label="代理筛选" style="width: 300px">
+          <el-input
+            v-model="addParams.id"
+            placeholder="请输入代理UID"
+            style="width: 200px"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="" style="width:400px">
+        <el-form-item label="" style="width: 400px">
           <el-date-picker
             v-model="dateValue"
             type="daterange"
@@ -17,10 +21,10 @@
             end-placeholder="结束日期"
             :editable="false"
             :clearable="false"
-            >
+          >
           </el-date-picker>
         </el-form-item>
-        <div class="buttonBox" style="margin-bottom:22px">
+        <div class="buttonBox" style="margin-bottom: 22px">
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
           <!-- <el-button type="primary" @click="addMember()">添加</el-button>
           <el-button type="primary" @click="mtransferA()">会员转代理</el-button> -->
@@ -37,19 +41,32 @@
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
-        <div class="data-item">活跃总人数：{{ totalData.order_member_count }}</div>
+        <div class="data-item">
+          活跃总人数：{{ totalData.order_member_count }}
+        </div>
         <div class="data-item">新增总人数：{{ totalData.new_member }}</div>
       </div>
     </div>
     <div class="wrap">
-      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row>
+      <el-table
+        v-loading="listLoading"
+        :data="dataList"
+        element-loading-text="Loading"
+        border
+        fit
+        highlight-current-row
+      >
         <el-table-column label="代理ID" align="center" prop="id">
         </el-table-column>
-        <el-table-column label="代理账号" align="center" >
+        <el-table-column label="代理账号" align="center">
           <template slot-scope="scope">
-            <div @click="searchID(scope.row)" :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.username }}</div>
+            <div
+              @click="searchID(scope.row)"
+              :class="scope.row.member_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.username }}
+            </div>
           </template>
-          
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
         </el-table-column>
@@ -57,13 +74,33 @@
         </el-table-column>
         <el-table-column label="总提现" align="center" prop="total_withdraw">
         </el-table-column>
-        <el-table-column label="提现中" align="center" prop="total_deposit_pending">
+        <el-table-column
+          label="提现中"
+          align="center"
+          prop="total_deposit_pending"
+        >
         </el-table-column>
         <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
-        <el-table-column label="订单金额" align="center" prop="order_amount">
+        <el-table-column label="订单金额" align="center">
+          <template slot-scope="scope">
+            <div
+              @click="searchOrderDetails(scope.row)"
+              :class="scope.row.member_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_amount }}
+            </div>
+          </template>
         </el-table-column>
-        <el-table-column label="订单数量" align="center" prop="order_count">
+        <el-table-column label="订单数量" align="center">
+          <template slot-scope="scope">
+            <div
+              @click="searchOrderDetails(scope.row)"
+              :class="scope.row.member_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_count }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="总收益" align="center" prop="income">
         </el-table-column>
@@ -71,7 +108,11 @@
         </el-table-column>
         <el-table-column label="团队佣金" align="center" prop="HasMember"> -->
         <!-- </el-table-column> -->
-        <el-table-column label="活跃人数" align="center" prop="order_member_count">
+        <el-table-column
+          label="活跃人数"
+          align="center"
+          prop="order_member_count"
+        >
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
         </el-table-column>
@@ -79,24 +120,45 @@
         </el-table-column>
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
-            <div>{{ scope.row.created_at.split(' ')[0] }}</div>
+            <div>{{ scope.row.created_at.split(" ")[0] }}</div>
           </template>
         </el-table-column>
       </el-table>
-      
+
       <div class="pagination" style="margin-bottom: 20px">
         <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-            :page-sizes="modelPageOptions.pageList" :page-size="modelPageOptions.pageSize"
-            layout="total, sizes, prev, pager, next" :total="modelPageOptions.total"></el-pagination>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="modelPageOptions.pageList"
+            :page-size="modelPageOptions.pageSize"
+            layout="total, sizes, prev, pager, next"
+            :total="modelPageOptions.total"
+          ></el-pagination>
         </div>
       </div>
     </div>
-    <el-dialog title="代理转移" :visible.sync="TransferDialog" width="40%" top="5vh" :before-close="hideCreate"
-      :close-on-click-modal="false">
-      <el-form ref="createForm" :model="createForm" :rules="rules" label-width="120px" class="modifyForm">
+    <el-dialog
+      title="代理转移"
+      :visible.sync="TransferDialog"
+      width="40%"
+      top="5vh"
+      :before-close="hideCreate"
+      :close-on-click-modal="false"
+    >
+      <el-form
+        ref="createForm"
+        :model="createForm"
+        :rules="rules"
+        label-width="120px"
+        class="modifyForm"
+      >
         <el-form-item label="上级代理账号" prop="agent_id">
-          <el-input v-model="createForm.agent_id" show-word-limit placeholder="请输入上级代理账号">
+          <el-input
+            v-model="createForm.agent_id"
+            show-word-limit
+            placeholder="请输入上级代理账号"
+          >
           </el-input>
         </el-form-item>
       </el-form>
@@ -106,14 +168,29 @@
       </span>
     </el-dialog>
     <!-- 修改密码 -->
-    <el-dialog title="修改密码" :visible.sync="editDialog" width="40%" top="5vh" :before-close="hideCreate"
-      :close-on-click-modal="false">
-      <el-form ref="createForm" :model="createForm" :rules="pswrules" label-width="120px" class="modifyForm">
+    <el-dialog
+      title="修改密码"
+      :visible.sync="editDialog"
+      width="40%"
+      top="5vh"
+      :before-close="hideCreate"
+      :close-on-click-modal="false"
+    >
+      <el-form
+        ref="createForm"
+        :model="createForm"
+        :rules="pswrules"
+        label-width="120px"
+        class="modifyForm"
+      >
         <el-form-item label="密码" prop="password">
-          <el-input v-model="createForm.password" show-word-limit placeholder="请输入修改的密码">
+          <el-input
+            v-model="createForm.password"
+            show-word-limit
+            placeholder="请输入修改的密码"
+          >
           </el-input>
         </el-form-item>
-
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="hideCreate">取消</el-button>
@@ -121,15 +198,35 @@
       </span>
     </el-dialog>
     <!-- 添加会员 -->
-    <el-dialog title="添加代理" :visible.sync="addDialog" width="40%" top="5vh" :before-close="hideCreate"
-      :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addForm" :rules="pswrules" label-width="120px" class="modifyForm">
+    <el-dialog
+      title="添加代理"
+      :visible.sync="addDialog"
+      width="40%"
+      top="5vh"
+      :before-close="hideCreate"
+      :close-on-click-modal="false"
+    >
+      <el-form
+        ref="addForm"
+        :model="addForm"
+        :rules="pswrules"
+        label-width="120px"
+        class="modifyForm"
+      >
         <el-form-item label="代理账号" prop="user_name">
-          <el-input v-model="addForm.user_name" show-word-limit placeholder="请输入账号">
+          <el-input
+            v-model="addForm.user_name"
+            show-word-limit
+            placeholder="请输入账号"
+          >
           </el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="addForm.password" show-word-limit placeholder="请输入修改的密码">
+          <el-input
+            v-model="addForm.password"
+            show-word-limit
+            placeholder="请输入修改的密码"
+          >
           </el-input>
         </el-form-item>
         <!-- <el-form-item label="上级" prop="password">
@@ -143,11 +240,27 @@
       </span>
     </el-dialog>
     <!-- 会员转代理弹窗 -->
-    <el-dialog title="会员转代理" :visible.sync="memberDialog" width="40%" top="5vh" :before-close="hideCreate"
-      :close-on-click-modal="false">
-      <el-form ref="createForm" :model="createForm" :rules="rules" label-width="120px" class="modifyForm">
+    <el-dialog
+      title="会员转代理"
+      :visible.sync="memberDialog"
+      width="40%"
+      top="5vh"
+      :before-close="hideCreate"
+      :close-on-click-modal="false"
+    >
+      <el-form
+        ref="createForm"
+        :model="createForm"
+        :rules="rules"
+        label-width="120px"
+        class="modifyForm"
+      >
         <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="createForm.memberId" show-word-limit placeholder="请输入会员ID">
+          <el-input
+            v-model="createForm.memberId"
+            show-word-limit
+            placeholder="请输入会员ID"
+          >
           </el-input>
         </el-form-item>
       </el-form>
@@ -157,11 +270,10 @@
       </span>
     </el-dialog>
   </div>
-
 </template>
 
 <script>
-import { getAgencyList } from '@/api/agency'
+import { getAgencyList } from "@/api/agency";
 
 export default {
   filters: {},
@@ -172,9 +284,9 @@ export default {
         page_size: 10,
       },
       addParams: {
-        start_date: '',
-        end_date: '',
-        id: '',
+        start_date: "",
+        end_date: "",
+        id: "",
       },
       dataList: [],
       listLoading: true,
@@ -187,13 +299,13 @@ export default {
         new Date().toISOString().slice(0, 10),
       ],
       createForm: {
-        agent_id: '',
-        password: '',
-        memberId: '',
+        agent_id: "",
+        password: "",
+        memberId: "",
       },
       addForm: {
-        user_name: '',
-        password: '',
+        user_name: "",
+        password: "",
       },
       totalData: {},
       modelPageOptions: {
@@ -204,129 +316,138 @@ export default {
       },
       rules: {
         agent_id: [
-          { required: true, trigger: 'blur', message: '请输入上级代理账号!' },
+          { required: true, trigger: "blur", message: "请输入上级代理账号!" },
         ],
         memberId: [
-          { required: true, trigger: 'blur', message: '请输入会员ID!' },
+          { required: true, trigger: "blur", message: "请输入会员ID!" },
         ],
 
-        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }],
+        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
       },
       pswrules: {
-        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }],
+        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
         user_name: [
-          { required: true, trigger: 'blur', message: '请输入代理账号!' },
+          { required: true, trigger: "blur", message: "请输入代理账号!" },
         ],
       },
-      selectId: '',
-    }
+      selectId: "",
+    };
   },
   created() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     //If click it will search that ID's lists
     searchID(row) {
       // console.log(row,  event,  column)
       if (row.member_count === 0) {
-        return false
+        return false;
       }
-      this.addParams.id = row.id
-      this.fetchData()
+      this.addParams.id = row.id;
+      this.fetchData();
     },
+
+    searchOrderDetails(row) {
+      console.log(row.id);
+      this.$router.push({
+        path: "/orderDetail",
+        query: { id: row.id },
+      });
+    },
+
     searchHandle() {
-      this.query.page = 1
-      this.fetchData()
+      this.query.page = 1;
+      this.fetchData();
     },
     //调整每页展示的条数
     handleSizeChange(val) {
-      this.query.page_size = val
-      console.log(val)
-      this.fetchData()
+      this.query.page_size = val;
+      console.log(val);
+      this.fetchData();
     },
     //当前的页数
     handleCurrentChange(val) {
-      this.query.page = val
-      this.fetchData()
+      this.query.page = val;
+      this.fetchData();
     },
     fetchData() {
-      console.log(this.dateValue)
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
+      console.log(this.dateValue);
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
       if (this.addParams.id) {
-        myParams += `&uid=${this.addParams.id}`
+        myParams += `&uid=${this.addParams.id}`;
       }
       if (this.dateValue.length) {
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
-      this.listLoading = true
+      this.listLoading = true;
       getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
-          this.modelPageOptions.total = res.data.total
-          this.dataList = res.data.agents
-          this.totalData = res.data.statistics
-          this.listLoading = false
+          this.modelPageOptions.total = res.data.total;
+          this.dataList = res.data.agents;
+          this.totalData = res.data.statistics;
+          this.listLoading = false;
         }
-      })
+      });
     },
     showDialog(type, row) {
-      this.selectId = row.Id
+      this.selectId = row.Id;
       //转移代理
-      if (type == 'transfer') {
-        this.TransferDialog = true
-      } else if (type == 'edit') {
+      if (type == "transfer") {
+        this.TransferDialog = true;
+      } else if (type == "edit") {
         //编辑
-        this.editDialog = true
+        this.editDialog = true;
       } else {
         //代理报表路由
         this.$router.push({
-          path: '/finance',
+          path: "/finance",
           query: { id: row.Id },
-        })
+        });
       }
     },
     addMember() {
-      this.addDialog = true
+      this.addDialog = true;
     },
     mtransferA() {
-      this.memberDialog = true
+      this.memberDialog = true;
     },
     submit(type) {
       this.$refs.createForm.validate((valid) => {
         if (valid) {
-          if (type == 'transfer') {
-            var reqFn = agentTrans
+          if (type == "transfer") {
+            var reqFn = agentTrans;
             var parmasData = {
               id: this.selectId,
               agent_id: Number(this.createForm.agent_id),
-            }
-            var msg = '转移代理成功'
-          } else if (type == 'memberTran') {
-            var reqFn = agentToagent
+            };
+            var msg = "转移代理成功";
+          } else if (type == "memberTran") {
+            var reqFn = agentToagent;
             var parmasData = {
               id: Number(this.createForm.memberId),
-            }
-            var msg = '会员转代理成功！'
+            };
+            var msg = "会员转代理成功！";
           } else {
-            var reqFn = changePsw
+            var reqFn = changePsw;
             var parmasData = {
               agent_id: this.selectId,
               password: this.createForm.password,
-            }
-            var msg = '修改密码成功'
+            };
+            var msg = "修改密码成功";
           }
           reqFn(parmasData).then((res) => {
             if (res.err_code == 0) {
-              this.$message.success(msg)
-              this.hideCreate()
-              this.fetchData()
+              this.$message.success(msg);
+              this.hideCreate();
+              this.fetchData();
             } else {
-              this.$message.error(res.err_msg)
-              this.createForm.agent_id = ''
-              this.createForm.password = ''
+              this.$message.error(res.err_msg);
+              this.createForm.agent_id = "";
+              this.createForm.password = "";
             }
-          })
+          });
         }
-      })
+      });
     },
     submitAdd() {
       this.$refs.addForm.validate((valid) => {
@@ -334,55 +455,55 @@ export default {
           var parmasData = {
             user_name: this.addForm.user_name,
             password: this.addForm.password,
-          }
+          };
           addAgent(parmasData).then((res) => {
-            console.log(123)
+            console.log(123);
             if (res.err_code == 0) {
-              this.$message.success('添加代理成功')
-              this.hideAddCreate()
-              this.fetchData()
+              this.$message.success("添加代理成功");
+              this.hideAddCreate();
+              this.fetchData();
             } else {
-              this.addForm.user_name = ''
-              this.addForm.password = ''
+              this.addForm.user_name = "";
+              this.addForm.password = "";
             }
-          })
+          });
         }
-      })
+      });
     },
     hideCreate() {
-      this.TransferDialog = false
-      this.editDialog = false
-      this.memberDialog = false
-      this.addDialog = false
+      this.TransferDialog = false;
+      this.editDialog = false;
+      this.memberDialog = false;
+      this.addDialog = false;
       this.createForm = {
-        agent_id: '',
-        memberId: '',
-      }
+        agent_id: "",
+        memberId: "",
+      };
       this.addForm = {
-        user_name: '',
-        password: '',
-      }
+        user_name: "",
+        password: "",
+      };
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.createForm.resetFields()
-          this.$refs.addForm.resetFields()
-        }, 500)
-      })
+          this.$refs.createForm.resetFields();
+          this.$refs.addForm.resetFields();
+        }, 500);
+      });
     },
     hideAddCreate() {
-      this.addDialog = false
+      this.addDialog = false;
       this.addForm = {
-        user_name: '',
-        password: '',
-      }
+        user_name: "",
+        password: "",
+      };
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.addForm.resetFields()
-        }, 500)
-      })
+          this.$refs.addForm.resetFields();
+        }, 500);
+      });
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .blue {
