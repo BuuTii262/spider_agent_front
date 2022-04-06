@@ -11,14 +11,14 @@
       <div class="title-container">
         <h3 class="title">Login Form</h3>
       </div>
-      <el-tabs class="tabs" v-model="activeName" @tab-click="handleClick">
+      <el-tabs class="tabs" v-model="activeName">
         <el-tab-pane label="手机" name="first">
           <el-form-item prop="username">
             <span class="svg-container">
               <el-select v-model="code" :label="code" placeholder="Select">
                 <el-option
-                  v-for="item in aaaa"
-                  :key="item"
+                  v-for="(item, index) in aaaa"
+                  :key="`99999999${index}`"
                   :label="item"
                   :value="item"
                 >

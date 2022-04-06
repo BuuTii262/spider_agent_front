@@ -33,7 +33,7 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
-        <div class="data-item">充提差：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">充提差：{{ totalData.benefit }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
@@ -42,9 +42,14 @@
       </div>
     </div>
     <div class="wrap">
-      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID">
-        <el-table-column label="代理ID" align="center" prop="id"></el-table-column>
-        <el-table-column label="代理账号" align="center" prop="username" >
+      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row>
+        <el-table-column label="代理ID" align="center" prop="id">
+        </el-table-column>
+        <el-table-column label="代理账号" align="center" >
+          <template slot-scope="scope">
+            <div @click="searchID(scope.row)" :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.username }}</div>
+          </template>
+          
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
         </el-table-column>
@@ -69,8 +74,13 @@
         <el-table-column label="活跃人数" align="center" prop="order_member_count">
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
-        </el-table-column>\
+        </el-table-column>
         <el-table-column label="余额" align="center" prop="balance">
+        </el-table-column>
+        <el-table-column label="注册时间" align="center">
+          <template slot-scope="scope">
+            <div>{{ scope.row.created_at.split(' ')[0] }}</div>
+          </template>
         </el-table-column>
       </el-table>
       
@@ -216,8 +226,11 @@ export default {
   },
   methods: {
     //If click it will search that ID's lists
-    searchID(row, event, column) {
+    searchID(row) {
       // console.log(row,  event,  column)
+      if (row.member_count === 0) {
+        return false
+      }
       this.addParams.id = row.id
       this.fetchData()
     },
@@ -252,11 +265,6 @@ export default {
           this.dataList = res.data.agents
           this.totalData = res.data.statistics
           this.listLoading = false
-        } else {
-          this.$message({
-            message: res.res_msg,
-            type: 'error',
-          })
         }
       })
     },
@@ -377,6 +385,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.blue {
+  color: blue;
+  text-decoration: underline;
+}
 .wrap {
   background: #fff;
   border-radius: 8px;
@@ -396,5 +408,14 @@ export default {
       margin-right: 40px;
     }
   }
+}
+</style>
+<style>
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
 }
 </style>

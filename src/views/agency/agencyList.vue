@@ -42,13 +42,14 @@
       </div>
     </div>
     <div class="wrap">
-      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row @row-click="searchID" :row-class-name="tableRowClassName">
-        <el-table-column label="代理ID" align="center">
-          <template slot-scope="scope">
-            <div :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.id }}</div>
-          </template>
+      <el-table v-loading="listLoading" :data="dataList" element-loading-text="Loading" border fit highlight-current-row>
+        <el-table-column label="代理ID" align="center" prop="id">
         </el-table-column>
-        <el-table-column label="代理账号" align="center" prop="username" >
+        <el-table-column label="代理账号" align="center" >
+          <template slot-scope="scope">
+            <div @click="searchID(scope.row)" :class="scope.row.member_count > 0 ? 'blue' : ''">{{ scope.row.username }}</div>
+          </template>
+          
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
         </el-table-column>
@@ -76,7 +77,10 @@
         </el-table-column>
         <el-table-column label="余额" align="center" prop="balance">
         </el-table-column>
-        <el-table-column label="注册时间" align="center" prop="balance">
+        <el-table-column label="注册时间" align="center">
+          <template slot-scope="scope">
+            <div>{{ scope.row.created_at.split(' ')[0] }}</div>
+          </template>
         </el-table-column>
       </el-table>
       
@@ -222,8 +226,11 @@ export default {
   },
   methods: {
     //If click it will search that ID's lists
-    searchID(row, event, column) {
+    searchID(row) {
       // console.log(row,  event,  column)
+      if (row.member_count === 0) {
+        return false
+      }
       this.addParams.id = row.id
       this.fetchData()
     },
@@ -242,13 +249,6 @@ export default {
       this.query.page = val
       this.fetchData()
     },
-    tableRowClassName({ row, rowIndex }) {
-      if (row.member_count > 0) {
-        console.log(row)
-        return 'success-row'
-      }
-      return ''
-    },
     fetchData() {
       console.log(this.dateValue)
       let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
@@ -265,11 +265,6 @@ export default {
           this.dataList = res.data.agents
           this.totalData = res.data.statistics
           this.listLoading = false
-        } else {
-          this.$message({
-            message: res.res_msg,
-            type: 'error',
-          })
         }
       })
     },
