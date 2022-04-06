@@ -81,6 +81,7 @@ export const constantRoutes = [
         name: '订单详情',
         component: () => import('@/views/agency/orderDetail'),
         meta: { title: '订单详情', icon: 'dashboard' },
+        hidden: true
       },
       {
         path: '/agencyInviteCode',
