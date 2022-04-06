@@ -67,7 +67,10 @@
             <div v-if="scope.row.status == 3">结束</div>
           </template>
         </el-table-column>
-        <el-table-column label="是否续约" align="center" prop="renew">
+        <el-table-column label="是否续约" align="center">
+          <template slot-scope="scope">
+            <div>{{scope.row.renew == '1' ? "是" : "否" }}</div>
+          </template>
         </el-table-column>
         <el-table-column label="订单开始时间" align="center" prop="created_at">
         </el-table-column>
