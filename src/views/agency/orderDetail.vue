@@ -47,17 +47,17 @@
         fit
         highlight-current-row
       >
-        <el-table-column label="Name" align="center" prop="UserId">
+        <el-table-column label="Name" align="center" prop="username">
         </el-table-column>
         <el-table-column label="Rate" align="center" prop="Profit">
         </el-table-column>
-        <el-table-column label="Period" align="center" prop="Renew">
+        <el-table-column label="Period" align="center" prop="period">
         </el-table-column>
-        <el-table-column label="Created_at" align="center" prop="CreatedAt">
+        <el-table-column label="Created_at" align="center" prop="created_at">
         </el-table-column>
-        <el-table-column label="Amount" align="center" prop="Amount">
+        <el-table-column label="Amount" align="center" prop="amount">
         </el-table-column>
-        <el-table-column label="Status" align="center" prop="Status">
+        <el-table-column label="Status" align="center" prop="status">
         </el-table-column>
       </el-table>
 
@@ -311,7 +311,7 @@ export default {
       getOrders(myParams).then((res) => {
         if (res.err_code == 0) {
           this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data.agents;
+          this.dataList = res.data.orders;
           this.totalData = res.data.statistics;
           this.listLoading = false;
         }
