@@ -59,7 +59,7 @@ export const constantRoutes = [
   {
     path: '/agency',
     component: Layout,
-    redirect: '/agency/agencyList',
+    redirect: '/agencyList',
     name: '代理管理',
     alwaysShow: true,
     meta: { title: '代理管理', icon: 'el-icon-s-help' },
@@ -74,13 +74,13 @@ export const constantRoutes = [
         path: '/agencyTest',
         name: '测试列表',
         component: () => import('@/views/agency/agencyTest'),
-        meta: { title: '测试列表', icon: 'dashboard' },
+        meta: { title: '测试列表', icon: 'table' },
       },
       {
         path: '/orderDetail',
         name: '订单详情',
         component: () => import('@/views/agency/orderDetail'),
-        meta: { title: '订单详情', icon: 'dashboard' },
+        meta: { title: '订单详情', icon: 'printer' },
         hidden: true
       },
       {
