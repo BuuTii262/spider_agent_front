@@ -74,7 +74,7 @@
         <el-table-column label="订单数量" align="center" prop="order_count">
           <template slot-scope="scope">
             <div
-              @click="searchOrderDetailsWithMemberCount(scope.row)"
+              @click="searchOrderDetailsWithOrderCount(scope.row)"
               :class="scope.row.order_count > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_count }}
@@ -260,7 +260,7 @@ export default {
         query: { id: row.id },
       });
     },
-    searchOrderDetailsWithMemberCount(row){
+    searchOrderDetailsWithOrderCount(row){
       if(row.order_count === 0){
         return false;
       }
