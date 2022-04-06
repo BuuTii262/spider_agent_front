@@ -46,7 +46,8 @@ export default {
     logout() {
       // await this.$store.dispatch('user/logout')
       document.cookie =
-        'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;'
+        'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+      localStorage.removeItem('searchDate');
       // this.$router.push('/Login')
       location.reload()
     },
