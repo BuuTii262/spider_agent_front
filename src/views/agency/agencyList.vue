@@ -86,7 +86,7 @@
           <template slot-scope="scope">
             <div
               @click="searchOrderDetailsWithOrderAmount(scope.row)"
-              :class="scope.row.member_count > 0 ? 'blue' : ''"
+              :class="scope.row.order_amount > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_amount }}
             </div>
@@ -96,7 +96,7 @@
           <template slot-scope="scope">
             <div
               @click="searchOrderDetailsWithMemberCount(scope.row)"
-              :class="scope.row.member_count > 0 ? 'blue' : ''"
+              :class="scope.row.order_count > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_count }}
             </div>

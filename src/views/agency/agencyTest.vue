@@ -62,8 +62,24 @@
         <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
         <el-table-column label="订单金额" align="center" prop="order_amount">
+          <template slot-scope="scope">
+            <div
+              @click="searchOrderDetailsWithOrderAmount(scope.row)"
+              :class="scope.row.order_amount > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_amount }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="订单数量" align="center" prop="order_count">
+          <template slot-scope="scope">
+            <div
+              @click="searchOrderDetailsWithMemberCount(scope.row)"
+              :class="scope.row.order_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_count }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="总收益" align="center" prop="income">
         </el-table-column>
@@ -233,6 +249,26 @@ export default {
       }
       this.addParams.id = row.id
       this.fetchData()
+    },
+     searchOrderDetailsWithOrderAmount(row) {
+      if(row.order_amount === 0){
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/orderDetail",
+        query: { id: row.id },
+      });
+    },
+    searchOrderDetailsWithMemberCount(row){
+      if(row.order_count === 0){
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/orderDetail",
+        query: { id: row.id },
+      });
     },
     searchHandle() {
       this.query.page = 1
