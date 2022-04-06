@@ -26,8 +26,6 @@
         </el-form-item>
         <div class="buttonBox" style="margin-bottom: 22px">
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
-          <!-- <el-button type="primary" @click="addMember()">添加</el-button>
-          <el-button type="primary" @click="mtransferA()">会员转代理</el-button> -->
         </div>
       </el-form>
     </div>
