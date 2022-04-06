@@ -29,15 +29,7 @@
         </div>
       </el-form>
     </div> -->
-    <div class="wrap">
-      <div class="title">数据汇总</div>
-      <div class="data-group">
-        <div class="data-item">Total Amount: {{ totalData.total_amount }}</div>
-        <div class="data-item">
-          Total Symbol Amount: {{ totalData.total_symbol_amount }}
-        </div>
-      </div>
-    </div>
+    
     <div class="wrap">
       <el-table
         v-loading="listLoading"
