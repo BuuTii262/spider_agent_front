@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="search-wrap wrap">
+    <!-- <div class="search-wrap wrap">
       <el-form style="display: flex">
         <el-form-item label="代理筛选" style="width: 300px">
           <el-input
@@ -28,7 +28,7 @@
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
         </div>
       </el-form>
-    </div>
+    </div> -->
     <div class="wrap">
       <div class="title">数据汇总</div>
       <div class="data-group">
