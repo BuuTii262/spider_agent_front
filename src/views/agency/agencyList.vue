@@ -294,6 +294,7 @@ export default {
       editDialog: false,
       addDialog: false,
       memberDialog: false,
+      dateOfSearch: [],
       dateValue: [
         new Date().toISOString().slice(0, 10),
         new Date().toISOString().slice(0, 10),
@@ -334,9 +335,16 @@ export default {
     };
   },
   created() {
+    this.DateSearch();
     this.fetchData();
   },
   methods: {
+    DateSearch(){
+      if(localStorage.getItem("searchDate")){
+        console.log(JSON.parse(localStorage.getItem("searchDate")));
+        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+      }
+    },
     //If click it will search that ID's lists
     searchID(row) {
       // console.log(row,  event,  column)
@@ -352,6 +360,8 @@ export default {
         return false;
       }
       console.log(row.id);
+      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
+
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
@@ -362,6 +372,7 @@ export default {
         return false;
       }
       console.log(row.id);
+      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
@@ -384,7 +395,7 @@ export default {
       this.fetchData();
     },
     fetchData() {
-      console.log(this.dateValue);
+      // console.log(this.dateValue);
       let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`;
