@@ -110,6 +110,9 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
+        width: 100px;
+        text-align: right;
+        height: 50px;
         margin-top: 5px;
         position: relative;
 
