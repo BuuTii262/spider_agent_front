@@ -339,8 +339,8 @@ export default {
     this.fetchData();
   },
   methods: {
-    DateSearch(){
-      if(localStorage.getItem("searchDate")){
+    DateSearch() {
+      if (localStorage.getItem("searchDate")) {
         console.log(JSON.parse(localStorage.getItem("searchDate")));
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
       }
@@ -356,23 +356,21 @@ export default {
     },
 
     searchOrderDetailsWithOrderAmount(row) {
-      if(row.order_amount === 0){
+      if (row.order_amount === 0) {
         return false;
       }
       console.log(row.id);
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
 
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
       });
     },
-    searchOrderDetailsWithOrderCount(row){
-      if(row.order_count === 0){
+    searchOrderDetailsWithOrderCount(row) {
+      if (row.order_count === 0) {
         return false;
       }
       console.log(row.id);
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
@@ -380,6 +378,7 @@ export default {
     },
 
     searchHandle() {
+      localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
       this.query.page = 1;
       this.fetchData();
     },

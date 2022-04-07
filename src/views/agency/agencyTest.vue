@@ -263,7 +263,6 @@ export default {
         return false;
       }
       console.log(row.id);
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
@@ -274,13 +273,13 @@ export default {
         return false;
       }
       console.log(row.id);
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
       });
     },
     searchHandle() {
+      localStorage.setItem("searchDate", JSON.stringify(this.dateValue) );
       this.query.page = 1
       this.fetchData()
     },
