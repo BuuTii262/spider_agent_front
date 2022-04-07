@@ -5,7 +5,7 @@
         <el-form-item label="代理筛选" style="width:300px">
           <el-input v-model="addParams.id" placeholder="请输入代理UID" style="width: 200px"></el-input>
         </el-form-item>
-        <el-form-item label="注册时间" style="width: 450px">
+        <el-form-item label="统计数据时间" style="width: 450px">
           <el-date-picker
             v-model="dateValue"
             type="daterange"
