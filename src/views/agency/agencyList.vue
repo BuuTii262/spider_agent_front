@@ -9,7 +9,7 @@
             style="width: 200px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="" style="width: 400px">
+        <el-form-item label="注册时间" style="width: 450px">
           <el-date-picker
             v-model="dateValue"
             type="daterange"
