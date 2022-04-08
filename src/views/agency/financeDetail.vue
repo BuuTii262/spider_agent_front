@@ -34,7 +34,6 @@
             :page-size="modelPageOptions.pageSize"
             layout="total, sizes, prev, pager, next"
             :total="modelPageOptions.total"
-            disabled
           ></el-pagination>
         </div>
       </div>
@@ -133,11 +132,12 @@ export default {
       if (this.addParams.id) {
         myParams += `uid=${this.addParams.id}`;
       }
+      myParams += `&page=${this.query.page}&page_size=${this.query.page_size}`;
       this.listLoading = true;
       getFinanceDetail(myParams).then((res) => {
         if (res.err_code == 0) {
           this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data;
+          this.dataList = res.data.finances;
           this.listLoading = false;
         }
       });

@@ -69,3 +69,9 @@ export function getFinanceDetail(data) {
     method: 'get',
   })
 }
+export function getAgentOrders(data) {
+  return request({
+    url: '/agents/agent_orders' + data,
+    method: 'get',
+  })
+}

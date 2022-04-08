@@ -91,16 +91,16 @@ export const constantRoutes = [
       },
       {
         path: '/memberDetail',
-        name: 'memberDetail',
+        name: '会员详情',
         component: () => import('@/views/agency/memberDetail'),
-        meta: { title: 'memberDetail', icon: 'printer' },
+        meta: { title: '会员详情', icon: 'printer' },
         hidden: true
       },
       {
         path: '/financeDetail',
-        name: 'financeDetail',
+        name: '财务详情',
         component: () => import('@/views/agency/financeDetail'),
-        meta: { title: 'financeDetail', icon: 'dashboard' },
+        meta: { title: '财务详情', icon: 'dashboard' },
         hidden: true
       },
       {
