@@ -77,7 +77,7 @@
         <el-table-column
           label="提现中"
           align="center"
-          prop="total_deposit_pending"
+          prop="total_withdraw_pending"
         >
         </el-table-column>
         <el-table-column label="充提差" align="center" prop="benifit">

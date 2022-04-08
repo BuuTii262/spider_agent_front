@@ -76,25 +76,18 @@
           style="margin-right: 30px; min-width: 200px"
         >
           <el-date-picker
-            v-model="formOptions.TimeStart"
-            type="date"
-            placeholder="选择开始日期"
+            v-model="dateValue"
+            type="daterange"
+            align="right"
             value-format="yyyy-MM-dd"
-            @change="optionsTimeStratChange"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item
-          label="结束日期"
-          label-width="150px"
-          style="margin-right: 30px; min-width: 200px"
-        >
-          <el-date-picker
-            v-model="formOptions.TimeEnd"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择结束时间"
-            @change="optionsTimeEndChange"
-          ></el-date-picker>
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :editable="false"
+            :clearable="false"
+          >
+          </el-date-picker>
         </el-form-item>
         <div style="margin-top: 50px" class="buttonBox">
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
@@ -193,14 +186,12 @@ export default {
         page: 1,
         page_size: 10,
       },
-      addParams: {
-        start_date: "",
-        end_date: "",
-        id: "",
-      },
       dataList: [],
       listLoading: true,
-      dateValue: [],
+      dateValue: [
+        new Date().toISOString().slice(0, 10),
+        new Date().toISOString().slice(0, 10),
+      ],
       modelPageOptions: {
         page: 1, //列表 -- 当前页码
         total: 0, //列表 -- 数据总数
@@ -327,11 +318,8 @@ export default {
   methods: {
     DateSearch() {
       if (localStorage.getItem("searchDate")) {
-        console.log(JSON.parse(localStorage.getItem("searchDate")));
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
-        this.formOptions.TimeStart = `${this.dateValue[0]} 00:00:00`;
-        this.formOptions.TimeEnd = `${this.dateValue[1]} 23:59:59`;
-        console.log(this.formOptions.start_date)
+        console.log(this.dateValue);
       }
     },
     handleSizeChange(val) {
@@ -345,12 +333,11 @@ export default {
       this.fetchData();
     },
     searchHandle() {
-      //   localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
+      localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
       this.query.page = 1;
       this.fetchData();
     },
     fetchData() {
-      console.log(this.dateValue);
       let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
 
       if (this.user_type) {
@@ -365,11 +352,8 @@ export default {
       if (this.order_status) {
         myParams += `&order_status=${this.order_status}`;
       }
-      if (this.formOptions.TimeStart) {
-        myParams += `&start_date=${this.formOptions.TimeStart}`;
-      }
-      if (this.formOptions.TimeEnd) {
-        myParams += `&end_date=${this.formOptions.TimeEnd}`;
+      if (this.dateValue.length) {
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
       console.log(myParams);
       this.listLoading = true;
@@ -381,14 +365,6 @@ export default {
           this.listLoading = false;
         }
       });
-    },
-    optionsTimeStratChange(val) {
-      this.formOptions.TimeStart = `${val} 00:00:00`;
-      console.log(this.formOptions.TimeStart);
-    },
-    optionsTimeEndChange(val) {
-      this.formOptions.TimeEnd = `${val} 23:59:59`;
-      console.log(this.formOptions.TimeEnd);
     },
   },
 };
