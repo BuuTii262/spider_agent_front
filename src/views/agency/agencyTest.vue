@@ -81,15 +81,36 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="总收益" align="center" prop="income">
+        <el-table-column label="总收益" align="center">
+          <template slot-scope="scope">
+            <div
+              :class="scope.row.income > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.income }}
+            </div>
+          </template>
         </el-table-column>
         <!-- <el-table-column label="总佣金" align="center" prop="HasMember">
         </el-table-column>
         <el-table-column label="团队佣金" align="center" prop="HasMember"> -->
         <!-- </el-table-column> -->
-        <el-table-column label="活跃人数" align="center" prop="order_member_count">
+        <el-table-column label="活跃人数" align="center">
+          <template slot-scope="scope">
+            <div
+              :class="scope.row.order_member_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_member_count }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="新增人数" align="center" prop="new_member">
+          <template slot-scope="scope">
+            <div
+              :class="scope.row.new_member > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.new_member }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="余额" align="center" prop="balance">
         </el-table-column>
