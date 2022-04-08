@@ -88,13 +88,14 @@ export const constantRoutes = [
         name: 'memberDetail',
         component: () => import('@/views/agency/memberDetail'),
         meta: { title: 'memberDetail', icon: 'printer' },
-        // hidden: true
+        hidden: true
       },
       {
         path: '/financeDetail',
         name: 'financeDetail',
         component: () => import('@/views/agency/financeDetail'),
         meta: { title: 'financeDetail', icon: 'dashboard' },
+        hidden: true
       },
       {
         path: '/agencyInviteCode',

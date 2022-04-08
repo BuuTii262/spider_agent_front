@@ -406,7 +406,7 @@ export default {
         return false;
       }
       this.$router.push({
-        path: "/orderDetail",
+        path: "/financeDetail",
         query: { id: row.id },
       });
     },
