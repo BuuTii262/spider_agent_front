@@ -77,6 +77,12 @@ export const constantRoutes = [
         meta: { title: '测试列表', icon: 'table' },
       },
       {
+        path: '/orderList',
+        name: '订单列表',
+        component: () => import('@/views/agency/orderList'),
+        meta: { title: '订单列表', icon: 'table' },
+      },
+      {
         path: '/orderDetail',
         name: '订单详情',
         component: () => import('@/views/agency/orderDetail'),
@@ -103,7 +109,7 @@ export const constantRoutes = [
         component: () => import('@/views/agency/agencyInviteCode'),
         meta: { title: '邀请码', icon: 'dashboard' },
       },
-      
+
     ]
   },
   // {
