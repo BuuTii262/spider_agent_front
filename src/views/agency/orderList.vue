@@ -53,7 +53,7 @@
           style="margin-right: 30px; min-width: 200px"
         >
           <el-select
-            v-model="product_status"
+            v-model="order_status"
             :multiple="false"
             filterable
             allow-create
@@ -97,7 +97,7 @@
           ></el-date-picker>
         </el-form-item>
         <div style="margin-top: 50px" class="buttonBox">
-          <el-button type="primary" @click="fetchData(true)">搜索</el-button>
+          <el-button type="primary" @click="searchHandle()">搜索</el-button>
         </div>
       </el-form>
     </div>
@@ -113,7 +113,7 @@
       >
         <el-table-column label="用户信息" align="center">
           <template slot-scope="scope">
-            <div><span>所属代理 : </span>{{ scope.row.username }}</div>
+            <div><span>所属代理 : </span>{{ scope.row.user_agent }}</div>
             <div><span>用户UID : </span>{{ scope.row.user_id }}</div>
           </template>
         </el-table-column>
@@ -128,30 +128,40 @@
                 scope.row.finance_end_time ? scope.row.finance_end_time : "--"
               }}
             </div>
-            <div>产品分类 : {{ scope.row.finance_type }}</div>
+            <div>产品分类 : {{ scope.row.finance_type | FinanceType }}</div>
             <div>买入时间 : {{ scope.row.finance_buy_time }}</div>
           </template>
         </el-table-column>
         <el-table-column label="天数" align="center">
           <template slot-scope="scope">
-            <div><span>自动续约 : </span>{{ scope.row.is_renew }}</div>
-            <div><span>自动审核 : </span>{{ scope.row.is_audit }}</div>
+            <div>
+              <span>自动续约 : </span>{{ scope.row.is_renew | isReNew }}
+            </div>
+            <div>
+              <span>自动审核 : </span>{{ scope.row.is_audit | isAudit }}
+            </div>
             <div><span>派息时间 : </span>{{ scope.row.payout_time }}</div>
             <div><span>最后派息 : </span>{{ scope.row.last_payout_time }}</div>
-            <div><span>理财周期 : </span>1 {{ scope.row.billing_cycle | billingCycle }}</div>
             <div>
-              <span>总派次数 : </span>{{ scope.row.billing_cycle_total }}
+              <span>理财周期 : </span>
+              {{ scope.row.billing_cycle | billingCycle }}
             </div>
-            <div><span>已派次数 : </span>{{ scope.row.have_payout }}</div>
+            <div>
+              <span>总派次数 : </span>{{ scope.row.billing_cycle_total }}次
+            </div>
+            <div><span>已派次数 : </span>{{ scope.row.have_payout }}次</div>
           </template>
         </el-table-column>
         <el-table-column label="审核结果" align="center">
           <template slot-scope="scope">
-            <div><span>类型 : </span>{{ scope.row.order_status }}</div>
-            <div><span>结果 : </span>{{ scope.row.result }}</div>
+            <div>
+              <span>类型 : </span
+              >{{ scope.row.order_type == 1 ? "买入" : "Sell" }}
+            </div>
+            <div><span>结果 : </span>{{ scope.row.result | OrderResult }}</div>
             <div><span>用户 : </span>{{ scope.row.username }}</div>
             <div><span> 时间 : </span>{{ scope.row.order_end_time }}</div>
-            <div><span>说明 : </span>{{ scope.row.user_id }}</div>
+            <div><span>说明 : </span>--</div>
           </template>
         </el-table-column>
       </el-table>
@@ -176,9 +186,9 @@
 import { getAgentOrders } from "@/api/agency";
 
 export default {
-  filters: {},
   data() {
     return {
+      user_name: localStorage.getItem("username") || "",
       query: {
         page: 1,
         page_size: 10,
@@ -218,8 +228,48 @@ export default {
           return "天";
         case "mon":
           return "月";
+        default:
+          return "--";
       }
-    }
+    },
+    isReNew(val) {
+      switch (val) {
+        case 0:
+          return "--";
+        case 1:
+          return "是";
+        case 2:
+          return "否";
+      }
+    },
+    FinanceType(val) {
+      switch (val) {
+        case 1:
+          return "活期";
+        case 2:
+          return "定期";
+        case 3:
+          return "拼单";
+      }
+    },
+    isAudit(val) {
+      switch (val) {
+        case val == true:
+          return "是";
+        case val == false:
+          return "否";
+      }
+    },
+    OrderResult(val) {
+      switch (val) {
+        case 1:
+          return "正常";
+        case 2:
+          return "违约";
+        case 3:
+          return "结束";
+      }
+    },
   },
   computed: {
     User_Type() {
@@ -229,11 +279,11 @@ export default {
           label: "全部",
         },
         {
-          value: "1",
+          value: "Normal",
           label: "会员",
         },
         {
-          value: "2",
+          value: "Test",
           label: "代理",
         },
       ];
@@ -271,42 +321,19 @@ export default {
   },
   created() {
     // console.log();
-
+    this.DateSearch();
     this.fetchData();
   },
-//   mounted() {
-//     this.fetchData();
-//   },
-  filters: {
-    statusFilter(val) {
-      switch (val) {
-        case 1:
-          return "购买";
-        case 2:
-          return "(赎回)违约";
-        case 3:
-          return "正常到期赎回";
-        case 4:
-          return "派息";
-        case 11:
-          return "从现货转入";
-        case 12:
-          return "从来理财转出";
-      }
-    },
-    flowFilter(val) {
-      switch (val) {
-        case 0:
-          return "-";
-        case 1:
-          return "增加";
-        case 2:
-          return "减少";
-      }
-    },
-  },
   methods: {
-    //调整每页展示的条数
+    DateSearch() {
+      if (localStorage.getItem("searchDate")) {
+        console.log(JSON.parse(localStorage.getItem("searchDate")));
+        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+        this.formOptions.TimeStart = `${this.dateValue[0]} 00:00:00`;
+        this.formOptions.TimeEnd = `${this.dateValue[1]} 23:59:59`;
+        console.log(this.formOptions.start_date)
+      }
+    },
     handleSizeChange(val) {
       this.query.page_size = val;
       console.log(val);
@@ -317,44 +344,34 @@ export default {
       this.query.page = val;
       this.fetchData();
     },
-    fetchData(offset) {
+    searchHandle() {
+      //   localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
+      this.query.page = 1;
+      this.fetchData();
+    },
+    fetchData() {
       console.log(this.dateValue);
-      let myParams = `?`;
-      if (this.addParams.id) {
-        myParams += `uid=${this.addParams.id}`;
-      }
-      myParams += `&page=${this.query.page}&page_size=${this.query.page_size}`;
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
 
-      // let myParams = {};
-      // if (offset) {
-      //   myParams["page"] = 1;
-      // } else {
-      //   const offset = this.query.page;
-      //   myParams["page"] = offset;
-      // }
-      // if (this.query.pageSize) {
-      //   myParams["page_size"] = this.query.pageSize;
-      // }
-      // if (this.user_type) {
-      //   myParams["user_type"] = this.user_type;
-      // // myParams +=
-      // }
-      // if (this.uid) {
-      //   myParams["uid"] = this.uid;
-      // }
-      // if (this.product_status) {
-      //   myParams["product_status"] = this.product_status;
-      // }
-      // if (this.order_status) {
-      //   myParams["order_status"] = this.order_status;
-      // }
-      // if (this.formOptions.TimeStart) {
-      //   myParams["start_date"] = this.formOptions.TimeStart;
-      // }
-      // if (this.formOptions.TimeEnd) {
-      //   myParams["end_date"] = this.formOptions.TimeEnd;
-      // }
-      // console.log(myParams)
+      if (this.user_type) {
+        myParams += `&user_type=${this.user_type}`;
+      }
+      if (this.uid) {
+        myParams += `&uid=${this.uid}`;
+      }
+      if (this.product_status) {
+        myParams += `&product_name=${this.product_status}`;
+      }
+      if (this.order_status) {
+        myParams += `&order_status=${this.order_status}`;
+      }
+      if (this.formOptions.TimeStart) {
+        myParams += `&start_date=${this.formOptions.TimeStart}`;
+      }
+      if (this.formOptions.TimeEnd) {
+        myParams += `&end_date=${this.formOptions.TimeEnd}`;
+      }
+      console.log(myParams);
       this.listLoading = true;
       getAgentOrders(myParams).then((res) => {
         if (res.err_code == 0) {
