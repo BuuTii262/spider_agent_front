@@ -138,7 +138,7 @@
         <el-table-column label="余额" align="center" prop="agent_balance">
         </el-table-column>
         <el-table-column
-          label="Total Team Balance"
+          label="团队余额"
           align="center"
           prop="team_balance"
         >
