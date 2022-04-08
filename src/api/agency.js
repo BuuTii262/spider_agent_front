@@ -65,7 +65,7 @@ export function getMembersDetail(data) {
 }
 export function getFinanceDetail(data) {
   return request({
-    url: '/agents/finanaces' + data,
+    url: '/agents/financial' + data,
     method: 'get',
   })
 }

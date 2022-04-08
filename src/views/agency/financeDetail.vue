@@ -102,20 +102,12 @@ export default {
     },
     flowFilter(val) {
       switch (val) {
-        case 61:
-          return "管理扣除";
-        case 62:
-          return "后台提现";
-        case 63:
-          return "冲销";
-        case 64:
-          return "误存提出";
-        case 71:
-          return "人工上分";
-        case 72:
-          return "彩金";
-        case 72:
-          return "佣金";
+        case 0:
+          return "-";
+        case 1:
+          return "增加";
+        case 2:
+          return "减少";
       }
     },
   },
