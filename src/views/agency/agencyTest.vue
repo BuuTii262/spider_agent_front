@@ -84,6 +84,7 @@
         <el-table-column label="总收益" align="center">
           <template slot-scope="scope">
             <div
+              @click="searchFinace(scope.row)"
               :class="scope.row.income > 0 ? 'blue' : ''"
             >
               {{ scope.row.income }}
@@ -97,6 +98,7 @@
         <el-table-column label="活跃人数" align="center">
           <template slot-scope="scope">
             <div
+              @click="searchAllMember(scope.row)"
               :class="scope.row.order_member_count > 0 ? 'blue' : ''"
             >
               {{ scope.row.order_member_count }}
@@ -106,6 +108,7 @@
         <el-table-column label="新增人数" align="center" prop="new_member">
           <template slot-scope="scope">
             <div
+              @click="searchNewMember(scope.row)"
               :class="scope.row.new_member > 0 ? 'blue' : ''"
             >
               {{ scope.row.new_member }}
@@ -297,6 +300,40 @@ export default {
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
+      });
+    },
+    searchFinace(row){
+      if (row.income === 0) {
+        return false;
+      }
+      this.$router.push({
+        path: "/financeDetail",
+        query: { id: row.id },
+      });
+    },
+    searchAllMember(row) {
+      if (row.order_member_count === 0) {
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/memberDetail",
+        query: { id: row.id },
+      });
+    },
+    searchNewMember(row) {
+      if (row.new_member === 0) {
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/memberDetail",
+        query: { 
+          id: row.id,
+          startDate: this.dateValue[0],
+          endDate: this.dateValue[1]
+          },
+
       });
     },
     searchHandle() {
