@@ -274,9 +274,9 @@ export default {
 
     this.fetchData();
   },
-  mounted() {
-    this.fetchData();
-  },
+//   mounted() {
+//     this.fetchData();
+//   },
   filters: {
     statusFilter(val) {
       switch (val) {
