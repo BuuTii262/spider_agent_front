@@ -13,23 +13,12 @@
         <el-table-column label="金额" align="center" prop="amount" />
         <el-table-column label="账变类型" align="center">
           <template slot-scope="scope">
-            <div v-if="scope.row.flow_type == 61">管理扣除</div>
-            <div v-if="scope.row.flow_type == 62">后台提现</div>
-            <div v-if="scope.row.flow_type == 63">冲销</div>
-            <div v-if="scope.row.flow_type == 64">误存提出</div>
-            <div v-if="scope.row.flow_type == 71">人工上分</div>
-            <div v-if="scope.row.flow_type == 72">彩金</div>
-            <div v-if="scope.row.flow_type == 73">佣金</div>
+            {{ scope.row.flow_type | flowFilter }}
           </template>
         </el-table-column>
         <el-table-column label="类型" align="center" prop="status">
           <template slot-scope="scope">
-            <div v-if="scope.row.status == 1">购买</div>
-            <div v-if="scope.row.status == 2">(赎回)违约</div>
-            <div v-if="scope.row.status == 3">正常到期赎回</div>
-            <div v-if="scope.row.status == 4">派息</div>
-            <div v-if="scope.row.status == 11">从现货转入</div>
-            <div v-if="scope.row.status == 12">从来理财转出</div>
+            {{ scope.row.status | statusFilter }}
           </template>
         </el-table-column>
         <el-table-column label="币" align="center" prop="symbol" />
@@ -93,6 +82,42 @@ export default {
       : (this.dateValue = []);
 
     this.fetchData();
+  },
+  filters: {
+    statusFilter(val) {
+      switch (val) {
+        case 1:
+          return "购买";
+        case 2:
+          return "(赎回)违约";
+        case 3:
+          return "正常到期赎回";
+        case 4:
+          return "派息";
+        case 11:
+          return "从现货转入";
+        case 12:
+          return "从来理财转出";
+      }
+    },
+    flowFilter(val) {
+      switch (val) {
+        case 61:
+          return "管理扣除";
+        case 62:
+          return "后台提现";
+        case 63:
+          return "冲销";
+        case 64:
+          return "误存提出";
+        case 71:
+          return "人工上分";
+        case 72:
+          return "彩金";
+        case 72:
+          return "佣金";
+      }
+    },
   },
   methods: {
     searchHandle() {
