@@ -75,3 +75,9 @@ export function getAgentOrders(data) {
     method: 'get',
   })
 }
+export function getTimeZone() {
+  return request({
+    url: '/agents/timestamp',
+    method: 'get',
+  })
+}

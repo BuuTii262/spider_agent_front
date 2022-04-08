@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
+  <div :class="{ 'has-logo': showLogo }">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -12,45 +12,88 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item
+          v-for="route in routes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        />
+        <el-menu-item style="position: absolute; top: 900px">
+          <i class="el-icon-watch"></i>
+          <span>{{realTime}}</span>
+        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+import { mapGetters } from "vuex";
+import Logo from "./Logo";
+import SidebarItem from "./SidebarItem";
+import variables from "@/styles/variables.scss";
+import { getTimeZone } from "@/api/agency";
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      realTime: "",
+    };
+  },
+  mounted() {
+    setInterval(()=>this.getTime(), 1000) 
+  },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
+    ...mapGetters(["sidebar"]),
     routes() {
-      return this.$router.options.routes
+      return this.$router.options.routes;
     },
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
+      const route = this.$route;
+      const { meta, path } = route;
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
+      return path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
+      return variables;
     },
     isCollapse() {
-      return !this.sidebar.opened
-    }
-  }
-}
+      return !this.sidebar.opened;
+    },
+  },
+  methods: {
+    getTime() {
+      getTimeZone().then((res) => {
+        if (res.err_code == 0) {
+          this.loadRealTime(res.data.zone);
+        }
+      });
+    },
+    loadRealTime(zone) {      
+      let options = {
+          timeZone: zone,
+          // year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        },
+        formatter = new Intl.DateTimeFormat("zh-cn", options);
+
+      this.realTime = formatter.format(new Date());
+    },
+  },
+};
 </script>
+<style scoped>
+.clock {
+  background: red;
+}
+</style>
