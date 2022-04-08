@@ -9,12 +9,31 @@
         fit
         highlight-current-row
       >
-        <el-table-column label="id" align="center" prop="id" />
-        <el-table-column label="amount" align="center" prop="amount" />
-        <el-table-column label="flow_type" align="center" prop="flow_type" />
-        <el-table-column label="status" align="center" prop="status" />
-        <el-table-column label="symbol" align="center" prop="symbol" />
-        <el-table-column label="created_at" align="center" prop="created_at" />
+        <el-table-column label="用户ID" align="center" prop="id" />
+        <el-table-column label="金额" align="center" prop="amount" />
+        <el-table-column label="账变类型" align="center">
+          <template slot-scope="scope">
+            <div v-if="scope.row.flow_type == 61">管理扣除</div>
+            <div v-if="scope.row.flow_type == 62">后台提现</div>
+            <div v-if="scope.row.flow_type == 63">冲销</div>
+            <div v-if="scope.row.flow_type == 64">误存提出</div>
+            <div v-if="scope.row.flow_type == 71">人工上分</div>
+            <div v-if="scope.row.flow_type == 72">彩金</div>
+            <div v-if="scope.row.flow_type == 73">佣金</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="类型" align="center" prop="status">
+          <template slot-scope="scope">
+            <div v-if="scope.row.status == 1">购买</div>
+            <div v-if="scope.row.status == 2">(赎回)违约</div>
+            <div v-if="scope.row.status == 3">正常到期赎回</div>
+            <div v-if="scope.row.status == 4">派息</div>
+            <div v-if="scope.row.status == 11">从现货转入</div>
+            <div v-if="scope.row.status == 12">从来理财转出</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="币" align="center" prop="symbol" />
+        <el-table-column label="账变时间" align="center" prop="created_at" />
       </el-table>
 
       <div class="pagination" style="margin-bottom: 20px">
