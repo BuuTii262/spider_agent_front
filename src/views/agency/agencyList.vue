@@ -38,9 +38,12 @@
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
         <div class="data-item">充提差：{{ totalData.benefit }}</div>
+        <div class="data-item">Pending Order Count：{{ totalData.pending_order_count }}</div>
+        <div class="data-item">Pending Order Amount：{{ totalData.pending_order_amount }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
+        
         <div class="data-item">
           活跃总人数：{{ totalData.order_member_count }}
         </div>
@@ -79,6 +82,10 @@
           align="center"
           prop="total_withdraw_pending"
         >
+        </el-table-column>
+        <el-table-column label="Pending Order Count" align="center" prop="pending_order_count">
+        </el-table-column>
+        <el-table-column label="Pending Order Amount" align="center" prop="pending_order_amount">
         </el-table-column>
         <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
