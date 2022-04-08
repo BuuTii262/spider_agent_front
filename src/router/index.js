@@ -84,11 +84,26 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: '/memberDetail',
+        name: 'memberDetail',
+        component: () => import('@/views/agency/memberDetail'),
+        meta: { title: 'memberDetail', icon: 'printer' },
+        hidden: true
+      },
+      {
+        path: '/financeDetail',
+        name: 'financeDetail',
+        component: () => import('@/views/agency/financeDetail'),
+        meta: { title: 'financeDetail', icon: 'dashboard' },
+        hidden: true
+      },
+      {
         path: '/agencyInviteCode',
         name: '邀请码',
         component: () => import('@/views/agency/agencyInviteCode'),
         meta: { title: '邀请码', icon: 'dashboard' },
-      }
+      },
+      
     ]
   },
   // {

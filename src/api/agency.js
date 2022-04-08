@@ -57,3 +57,15 @@ export function getOrders(data) {
     method: 'get',
   })
 }
+export function getMembersDetail(data) {
+  return request({
+    url: '/agents/members' + data,
+    method: 'get',
+  })
+}
+export function getFinanceDetail(data) {
+  return request({
+    url: '/agents/finanaces' + data,
+    method: 'get',
+  })
+}

@@ -102,21 +102,46 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="总收益" align="center" prop="income">
+        <el-table-column label="总收益" align="center">
+          <template slot-scope="scope">
+            <div
+              @click="searchFinace(scope.row)"
+             :class="scope.row.income > 0 ? 'blue' : ''">
+              {{ scope.row.income }}
+            </div>
+          </template>
         </el-table-column>
         <!-- <el-table-column label="总佣金" align="center" prop="HasMember">
         </el-table-column>
         <el-table-column label="团队佣金" align="center" prop="HasMember"> -->
         <!-- </el-table-column> -->
+        <el-table-column label="活跃人数" align="center">
+          <template slot-scope="scope">
+            <div
+              @click="searchAllMember(scope.row)"
+              :class="scope.row.order_member_count > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.order_member_count }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="新增人数" align="center">
+          <template slot-scope="scope">
+            <div
+              @click="searchNewMember(scope.row)"
+              :class="scope.row.new_member > 0 ? 'blue' : ''"
+            >
+              {{ scope.row.new_member }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="余额" align="center" prop="agent_balance">
+        </el-table-column>
         <el-table-column
-          label="活跃人数"
+          label="团队余额"
           align="center"
-          prop="order_member_count"
+          prop="team_balance"
         >
-        </el-table-column>
-        <el-table-column label="新增人数" align="center" prop="new_member">
-        </el-table-column>
-        <el-table-column label="余额" align="center" prop="balance">
         </el-table-column>
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
@@ -374,6 +399,40 @@ export default {
       this.$router.push({
         path: "/orderDetail",
         query: { id: row.id },
+      });
+    },
+    searchFinace(row){
+      if (row.income === 0) {
+        return false;
+      }
+      this.$router.push({
+        path: "/financeDetail",
+        query: { id: row.id },
+      });
+    },
+    searchAllMember(row) {
+      if (row.order_member_count === 0) {
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/memberDetail",
+        query: { id: row.id },
+      });
+    },
+    searchNewMember(row) {
+      if (row.new_member === 0) {
+        return false;
+      }
+      console.log(row.id);
+      this.$router.push({
+        path: "/memberDetail",
+        query: { 
+          id: row.id,
+          startDate: this.dateValue[0],
+          endDate: this.dateValue[1]
+          },
+
       });
     },
 
