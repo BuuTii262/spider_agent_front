@@ -18,9 +18,9 @@
           :item="route"
           :base-path="route.path"
         />
-        <el-menu-item style="position: absolute; top: 900px;">
+        <el-menu-item style="position: absolute; top: 900px">
           <i class="el-icon-watch"></i>
-          <span>{{realTime}}</span>
+          <span>{{ realTime }}</span>
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
@@ -43,7 +43,7 @@ export default {
     };
   },
   mounted() {
-    setInterval(()=>this.loadRealTime(this.zone), 1000) 
+    setInterval(() => this.loadRealTime(this.zone), 1000);
   },
   computed: {
     ...mapGetters(["sidebar"]),
@@ -73,11 +73,11 @@ export default {
       getTimeZone().then((res) => {
         if (res.err_code == 0) {
           this.TimeZone = res.data.zone;
-          console.log(this.TimeZone)
+          console.log(this.TimeZone);
         }
       });
     },
-    loadRealTime(zone) {      
+    loadRealTime(zone) {
       let options = {
           timeZone: zone,
           // year: "numeric",
@@ -89,9 +89,7 @@ export default {
         },
         formatter = new Intl.DateTimeFormat("zh-cn", options);
 
-
       this.realTime = formatter.format(new Date());
-      console.log(this.realTime)
     },
   },
 };

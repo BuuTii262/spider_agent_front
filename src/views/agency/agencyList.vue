@@ -38,11 +38,14 @@
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
         <div class="data-item">充提差：{{ totalData.benefit }}</div>
+        <div class="data-item">提现中：{{ totalData.benefit }}</div>
         <div class="data-item">Pending Order Count：{{ totalData.pending_order_count }}</div>
         <div class="data-item">Pending Order Amount：{{ totalData.pending_order_amount }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
+        <div class="data-item">余额：{{ totalData.agent_balance }}</div>
+        <div class="data-item">团队余额：{{ totalData.team_balance }}</div>
         
         <div class="data-item">
           活跃总人数：{{ totalData.order_member_count }}
