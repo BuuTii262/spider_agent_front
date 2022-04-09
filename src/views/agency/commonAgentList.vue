@@ -70,7 +70,7 @@
           style="cursor: pointer"
         >
           <template slot-scope="scope">
-            <span @click="bcSearchId(id)" style="cursor: pointer;"
+            <span @click="bcSearchId(id,index)" style="cursor: pointer;"
             :class="addParams.id == id ? 'bcactive' : ''"
             >{{
               id
@@ -345,6 +345,7 @@ export default {
   filters: {},
   data() {
     return {
+      cuId : 0,
       breadCrump: [],
       query: {
         page: 1,
@@ -418,13 +419,29 @@ export default {
       if (row.member_count === 0) {
         return false;
       }
+      if(this.breadCrump.length == 0){
+        this.breadCrump.push(localStorage.getItem('currentId'))
+      }
       this.breadCrump.push(row.id);
       this.addParams.id = row.id;
       this.fetchData();
     },
-    bcSearchId(id) {
+    bcSearchId(id,indexId) {
       // this.breadCrump.remove(id)
-      this.breadCrump;
+      // const filter = this.breadCrump.filter(arr => {
+      //   return arr != id
+      // })
+      if(indexId != 0){
+        const filter = this.breadCrump.filter((arr,index)=>{
+        return index <= indexId
+      })
+      this.breadCrump  = filter
+      }else{
+        this.breadCrump = []
+      }
+      
+
+
       this.addParams.id = id;
       this.fetchData();
     },
@@ -519,7 +536,6 @@ export default {
         if (res.err_code == 0) {
           // this.breadCrump = this.breadCrump.concat(res.data.current_agent_id)
           // this.breadCrump.push(res.data.current_agent_id)
-          console.log(this.breadCrump);
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
           this.totalData = res.data.statistics;
