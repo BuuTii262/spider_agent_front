@@ -59,6 +59,25 @@
       </div>
     </div>
     <div class="wrap">
+      <el-breadcrumb
+        separator-class="el-icon-arrow-right"
+        style="margin-bottom: 20px"
+        @click="bcSearchId(id)"
+      >
+        <el-breadcrumb-item
+          v-for="(id, index) in breadCrump"
+          :key="index"
+          style="cursor: pointer"
+        >
+          <template slot-scope="scope">
+            <span @click="bcSearchId(id)" style="cursor: pointer;"
+            :class="addParams.id == id ? 'bcactive' : ''"
+            >{{
+              id
+            }}</span>
+          </template>
+        </el-breadcrumb-item>
+      </el-breadcrumb>
       <el-table
         v-loading="listLoading"
         :data="dataList"
@@ -326,6 +345,7 @@ export default {
   filters: {},
   data() {
     return {
+      breadCrump: [],
       query: {
         page: 1,
         page_size: 10,
@@ -398,7 +418,14 @@ export default {
       if (row.member_count === 0) {
         return false;
       }
+      this.breadCrump.push(row.id);
       this.addParams.id = row.id;
+      this.fetchData();
+    },
+    bcSearchId(id) {
+      // this.breadCrump.remove(id)
+      this.breadCrump;
+      this.addParams.id = id;
       this.fetchData();
     },
 
@@ -490,6 +517,9 @@ export default {
       this.listLoading = true;
       getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
+          // this.breadCrump = this.breadCrump.concat(res.data.current_agent_id)
+          // this.breadCrump.push(res.data.current_agent_id)
+          console.log(this.breadCrump);
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
           this.totalData = res.data.statistics;
@@ -637,6 +667,10 @@ export default {
       margin-right: 60px;
     }
   }
+}
+.bcactive{
+  color: blue;
+  font-weight: bold;
 }
 </style>
 <style>
