@@ -37,20 +37,19 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">提现中：{{ totalData.total_withdraw_pending }}</div>
         <div class="data-item">充提差：{{ totalData.benefit }}</div>
-        <div class="data-item">提现中：{{ totalData.benefit }}</div>
-        <div class="data-item">Pending Order Count：{{ totalData.pending_order_count }}</div>
-        <div class="data-item">Pending Order Amount：{{ totalData.pending_order_amount }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
+        <div class="data-item">未结算订单数量：{{ totalData.pending_order_count }}</div>
+        <div class="data-item">未结算订单金额：{{ totalData.pending_order_amount }}</div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
-        <div class="data-item">余额：{{ totalData.agent_balance }}</div>
-        <div class="data-item">团队余额：{{ totalData.team_balance }}</div>
-        
         <div class="data-item">
           活跃总人数：{{ totalData.order_member_count }}
         </div>
         <div class="data-item">新增总人数：{{ totalData.new_member }}</div>
+        <div class="data-item">余额：{{ totalData.agent_balance }}</div>
+        <div class="data-item">团队余额：{{ totalData.team_balance }}</div>
       </div>
     </div>
     <div class="wrap">
@@ -86,10 +85,6 @@
           prop="total_withdraw_pending"
         >
         </el-table-column>
-        <el-table-column label="Pending Order Count" align="center" prop="pending_order_count">
-        </el-table-column>
-        <el-table-column label="Pending Order Amount" align="center" prop="pending_order_amount">
-        </el-table-column>
         <el-table-column label="充提差" align="center" prop="benifit">
         </el-table-column>
         <el-table-column label="订单金额" align="center">
@@ -111,6 +106,10 @@
               {{ scope.row.order_count }}
             </div>
           </template>
+        </el-table-column>
+        <el-table-column label="未结算订单数量" align="center" prop="peinding_order_count">
+        </el-table-column>
+        <el-table-column label="未结算订单金额" align="center" prop="pending_order_amount">
         </el-table-column>
         <el-table-column label="总收益" align="center">
           <template slot-scope="scope">
@@ -308,11 +307,10 @@
 </template>
 
 <script>
-import { getAgencyList } from "@/api/agency";
+import { getAgencyList } from '@/api/agency'
 // import
 
 export default {
-
   filters: {},
   data() {
     return {
@@ -321,9 +319,9 @@ export default {
         page_size: 10,
       },
       addParams: {
-        start_date: "",
-        end_date: "",
-        id: "",
+        start_date: '',
+        end_date: '',
+        id: '',
       },
       dataList: [],
       listLoading: true,
@@ -337,13 +335,13 @@ export default {
         new Date().toISOString().slice(0, 10),
       ],
       createForm: {
-        agent_id: "",
-        password: "",
-        memberId: "",
+        agent_id: '',
+        password: '',
+        memberId: '',
       },
       addForm: {
-        user_name: "",
-        password: "",
+        user_name: '',
+        password: '',
       },
       totalData: {},
       modelPageOptions: {
@@ -354,194 +352,193 @@ export default {
       },
       rules: {
         agent_id: [
-          { required: true, trigger: "blur", message: "请输入上级代理账号!" },
+          { required: true, trigger: 'blur', message: '请输入上级代理账号!' },
         ],
         memberId: [
-          { required: true, trigger: "blur", message: "请输入会员ID!" },
+          { required: true, trigger: 'blur', message: '请输入会员ID!' },
         ],
 
-        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }],
       },
       pswrules: {
-        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }],
         user_name: [
-          { required: true, trigger: "blur", message: "请输入代理账号!" },
+          { required: true, trigger: 'blur', message: '请输入代理账号!' },
         ],
       },
-      selectId: "",
-    };
+      selectId: '',
+    }
   },
   created() {
-    this.DateSearch();
-    this.fetchData();
+    this.DateSearch()
+    this.fetchData()
   },
   methods: {
     DateSearch() {
-      if (localStorage.getItem("searchDate")) {
-        console.log(JSON.parse(localStorage.getItem("searchDate")));
-        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+      if (localStorage.getItem('searchDate')) {
+        console.log(JSON.parse(localStorage.getItem('searchDate')))
+        this.dateValue = JSON.parse(localStorage.getItem('searchDate'))
       }
     },
     //If click it will search that ID's lists
     searchID(row) {
       // console.log(row,  event,  column)
       if (row.member_count === 0) {
-        return false;
+        return false
       }
-      this.addParams.id = row.id;
-      this.fetchData();
+      this.addParams.id = row.id
+      this.fetchData()
     },
 
     searchOrderDetailsWithOrderAmount(row) {
       if (row.order_amount === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
 
       this.$router.push({
-        path: "/orderDetail",
+        path: '/orderDetail',
         query: { id: row.id },
-      });
+      })
     },
     searchOrderDetailsWithOrderCount(row) {
       if (row.order_count === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
       this.$router.push({
-        path: "/orderDetail",
+        path: '/orderDetail',
         query: { id: row.id },
-      });
+      })
     },
-    searchFinace(row){
+    searchFinace(row) {
       if (row.income === 0) {
-        return false;
+        return false
       }
       this.$router.push({
-        path: "/financeDetail",
+        path: '/financeDetail',
         query: { id: row.id },
-      });
+      })
     },
     searchAllMember(row) {
       if (row.order_member_count === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
       this.$router.push({
-        path: "/memberDetail",
+        path: '/memberDetail',
         query: { id: row.id },
-      });
+      })
     },
     searchNewMember(row) {
       if (row.new_member === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
       this.$router.push({
-        path: "/memberDetail",
-        query: { 
+        path: '/memberDetail',
+        query: {
           id: row.id,
           startDate: this.dateValue[0],
-          endDate: this.dateValue[1]
-          },
-
-      });
+          endDate: this.dateValue[1],
+        },
+      })
     },
 
     searchHandle() {
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
-      this.query.page = 1;
-      this.fetchData();
+      localStorage.setItem('searchDate', JSON.stringify(this.dateValue))
+      this.query.page = 1
+      this.fetchData()
     },
     //调整每页展示的条数
     handleSizeChange(val) {
-      this.query.page_size = val;
-      console.log(val);
-      this.fetchData();
+      this.query.page_size = val
+      console.log(val)
+      this.fetchData()
     },
     //当前的页数
     handleCurrentChange(val) {
-      this.query.page = val;
-      this.fetchData();
+      this.query.page = val
+      this.fetchData()
     },
     fetchData() {
       // console.log(this.dateValue);
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
-        myParams += `&uid=${this.addParams.id}`;
+        myParams += `&uid=${this.addParams.id}`
       }
       if (this.dateValue.length) {
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
       }
-      this.listLoading = true;
+      this.listLoading = true
       getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
-          this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data.agents;
-          this.totalData = res.data.statistics;
-          this.listLoading = false;
+          this.modelPageOptions.total = res.data.total
+          this.dataList = res.data.agents
+          this.totalData = res.data.statistics
+          this.listLoading = false
         }
-      });
+      })
     },
     showDialog(type, row) {
-      this.selectId = row.Id;
+      this.selectId = row.Id
       //转移代理
-      if (type == "transfer") {
-        this.TransferDialog = true;
-      } else if (type == "edit") {
+      if (type == 'transfer') {
+        this.TransferDialog = true
+      } else if (type == 'edit') {
         //编辑
-        this.editDialog = true;
+        this.editDialog = true
       } else {
         //代理报表路由
         this.$router.push({
-          path: "/finance",
+          path: '/finance',
           query: { id: row.Id },
-        });
+        })
       }
     },
     addMember() {
-      this.addDialog = true;
+      this.addDialog = true
     },
     mtransferA() {
-      this.memberDialog = true;
+      this.memberDialog = true
     },
     submit(type) {
       this.$refs.createForm.validate((valid) => {
         if (valid) {
-          if (type == "transfer") {
-            var reqFn = agentTrans;
+          if (type == 'transfer') {
+            var reqFn = agentTrans
             var parmasData = {
               id: this.selectId,
               agent_id: Number(this.createForm.agent_id),
-            };
-            var msg = "转移代理成功";
-          } else if (type == "memberTran") {
-            var reqFn = agentToagent;
+            }
+            var msg = '转移代理成功'
+          } else if (type == 'memberTran') {
+            var reqFn = agentToagent
             var parmasData = {
               id: Number(this.createForm.memberId),
-            };
-            var msg = "会员转代理成功！";
+            }
+            var msg = '会员转代理成功！'
           } else {
-            var reqFn = changePsw;
+            var reqFn = changePsw
             var parmasData = {
               agent_id: this.selectId,
               password: this.createForm.password,
-            };
-            var msg = "修改密码成功";
+            }
+            var msg = '修改密码成功'
           }
           reqFn(parmasData).then((res) => {
             if (res.err_code == 0) {
-              this.$message.success(msg);
-              this.hideCreate();
-              this.fetchData();
+              this.$message.success(msg)
+              this.hideCreate()
+              this.fetchData()
             } else {
-              this.$message.error(res.err_msg);
-              this.createForm.agent_id = "";
-              this.createForm.password = "";
+              this.$message.error(res.err_msg)
+              this.createForm.agent_id = ''
+              this.createForm.password = ''
             }
-          });
+          })
         }
-      });
+      })
     },
     submitAdd() {
       this.$refs.addForm.validate((valid) => {
@@ -549,55 +546,55 @@ export default {
           var parmasData = {
             user_name: this.addForm.user_name,
             password: this.addForm.password,
-          };
+          }
           addAgent(parmasData).then((res) => {
-            console.log(123);
+            console.log(123)
             if (res.err_code == 0) {
-              this.$message.success("添加代理成功");
-              this.hideAddCreate();
-              this.fetchData();
+              this.$message.success('添加代理成功')
+              this.hideAddCreate()
+              this.fetchData()
             } else {
-              this.addForm.user_name = "";
-              this.addForm.password = "";
+              this.addForm.user_name = ''
+              this.addForm.password = ''
             }
-          });
+          })
         }
-      });
+      })
     },
     hideCreate() {
-      this.TransferDialog = false;
-      this.editDialog = false;
-      this.memberDialog = false;
-      this.addDialog = false;
+      this.TransferDialog = false
+      this.editDialog = false
+      this.memberDialog = false
+      this.addDialog = false
       this.createForm = {
-        agent_id: "",
-        memberId: "",
-      };
+        agent_id: '',
+        memberId: '',
+      }
       this.addForm = {
-        user_name: "",
-        password: "",
-      };
+        user_name: '',
+        password: '',
+      }
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.createForm.resetFields();
-          this.$refs.addForm.resetFields();
-        }, 500);
-      });
+          this.$refs.createForm.resetFields()
+          this.$refs.addForm.resetFields()
+        }, 500)
+      })
     },
     hideAddCreate() {
-      this.addDialog = false;
+      this.addDialog = false
       this.addForm = {
-        user_name: "",
-        password: "",
-      };
+        user_name: '',
+        password: '',
+      }
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.addForm.resetFields();
-        }, 500);
-      });
+          this.$refs.addForm.resetFields()
+        }, 500)
+      })
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .blue {
@@ -620,7 +617,7 @@ export default {
       display: inline-block;
       font-size: 16px;
       line-height: 30px;
-      margin-right: 40px;
+      margin-right: 60px;
     }
   }
 }
