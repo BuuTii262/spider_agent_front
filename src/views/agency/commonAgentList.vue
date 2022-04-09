@@ -135,7 +135,7 @@
         <el-table-column
           label="未结算订单数量"
           align="center"
-          prop="peinding_order_count"
+          prop="pending_order_count"
         >
         </el-table-column>
         <el-table-column
@@ -437,7 +437,7 @@ export default {
       })
       this.breadCrump  = filter
       }else{
-        this.breadCrump = []
+        this.breadCrump = [];
       }
       
 
