@@ -37,14 +37,25 @@
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
         <div class="data-item">总充值：{{ totalData.total_deposit }}</div>
         <div class="data-item">总提现：{{ totalData.total_withdraw }}</div>
+        <div class="data-item">
+          提现中：{{ totalData.total_withdraw_pending }}
+        </div>
         <div class="data-item">充提差：{{ totalData.benefit }}</div>
         <div class="data-item">订单总金额：{{ totalData.order_amount }}</div>
         <div class="data-item">订单总数：{{ totalData.order_count }}</div>
+        <div class="data-item">
+          未结算订单数量：{{ totalData.pending_order_count }}
+        </div>
+        <div class="data-item">
+          未结算订单金额：{{ totalData.pending_order_amount }}
+        </div>
         <div class="data-item">总收益：{{ totalData.income }}</div>
         <div class="data-item">
           活跃总人数：{{ totalData.order_member_count }}
         </div>
         <div class="data-item">新增总人数：{{ totalData.new_member }}</div>
+        <div class="data-item">余额：{{ totalData.agent_balance }}</div>
+        <div class="data-item">团队余额：{{ totalData.team_balance }}</div>
       </div>
     </div>
     <div class="wrap">
@@ -102,11 +113,24 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+          label="未结算订单数量"
+          align="center"
+          prop="peinding_order_count"
+        >
+        </el-table-column>
+        <el-table-column
+          label="未结算订单金额"
+          align="center"
+          prop="pending_order_amount"
+        >
+        </el-table-column>
         <el-table-column label="总收益" align="center">
           <template slot-scope="scope">
             <div
               @click="searchFinace(scope.row)"
-             :class="scope.row.income > 0 ? 'blue' : ''">
+              :class="scope.row.income > 0 ? 'blue' : ''"
+            >
               {{ scope.row.income }}
             </div>
           </template>
@@ -137,11 +161,7 @@
         </el-table-column>
         <el-table-column label="余额" align="center" prop="agent_balance">
         </el-table-column>
-        <el-table-column
-          label="团队余额"
-          align="center"
-          prop="team_balance"
-        >
+        <el-table-column label="团队余额" align="center" prop="team_balance">
         </el-table-column>
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
@@ -299,8 +319,10 @@
 
 <script>
 import { getAgencyList } from "@/api/agency";
+// import
 
 export default {
+  props: ["data"],
   filters: {},
   data() {
     return {
@@ -401,7 +423,7 @@ export default {
         query: { id: row.id },
       });
     },
-    searchFinace(row){
+    searchFinace(row) {
       if (row.income === 0) {
         return false;
       }
@@ -427,12 +449,11 @@ export default {
       console.log(row.id);
       this.$router.push({
         path: "/memberDetail",
-        query: { 
+        query: {
           id: row.id,
           startDate: this.dateValue[0],
-          endDate: this.dateValue[1]
-          },
-
+          endDate: this.dateValue[1],
+        },
       });
     },
 
@@ -454,7 +475,12 @@ export default {
     },
     fetchData() {
       // console.log(this.dateValue);
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      let myParams = "";
+      if (this.data) {
+        myParams = `${this.data}&page=${this.query.page}&page_size=${this.query.page_size}`;
+      } else {
+        myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      }
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`;
       }
@@ -608,7 +634,7 @@ export default {
       display: inline-block;
       font-size: 16px;
       line-height: 30px;
-      margin-right: 40px;
+      margin-right: 60px;
     }
   }
 }
