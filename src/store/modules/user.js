@@ -66,7 +66,7 @@ const actions = {
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
-        commit('SET_INVITE_CODE', data.invite_code)
+        commit('SET_INVITE_CODE', invite_code)
         resolve(data)
       }).catch(error => {
         reject(error)
