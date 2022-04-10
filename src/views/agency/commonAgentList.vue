@@ -59,6 +59,25 @@
       </div>
     </div>
     <div class="wrap">
+      <el-breadcrumb
+        separator-class="el-icon-arrow-right"
+        style="margin-bottom: 20px"
+        @click="bcSearchId(id)"
+      >
+        <el-breadcrumb-item
+          v-for="(id, index) in breadCrump"
+          :key="index"
+          style="cursor: pointer"
+        >
+          <template slot-scope="scope">
+            <span @click="bcSearchId(id,index)" style="cursor: pointer;"
+            :class="addParams.id == id ? 'bcactive' : ''"
+            >{{
+              id
+            }}</span>
+          </template>
+        </el-breadcrumb-item>
+      </el-breadcrumb>
       <el-table
         v-loading="listLoading"
         :data="dataList"
@@ -326,6 +345,8 @@ export default {
   filters: {},
   data() {
     return {
+      cuId : 0,
+      breadCrump: [],
       query: {
         page: 1,
         page_size: 10,
@@ -398,7 +419,30 @@ export default {
       if (row.member_count === 0) {
         return false;
       }
+      if(this.breadCrump.length == 0){
+        this.breadCrump.push(localStorage.getItem('currentId'))
+      }
+      this.breadCrump.push(row.id);
       this.addParams.id = row.id;
+      this.fetchData();
+    },
+    bcSearchId(id,indexId) {
+      // this.breadCrump.remove(id)
+      // const filter = this.breadCrump.filter(arr => {
+      //   return arr != id
+      // })
+      if(indexId != 0){
+        const filter = this.breadCrump.filter((arr,index)=>{
+        return index <= indexId
+      })
+      this.breadCrump  = filter
+      }else{
+        this.breadCrump = [];
+      }
+      
+
+
+      this.addParams.id = id;
       this.fetchData();
     },
 
@@ -490,6 +534,8 @@ export default {
       this.listLoading = true;
       getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
+          // this.breadCrump = this.breadCrump.concat(res.data.current_agent_id)
+          // this.breadCrump.push(res.data.current_agent_id)
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
           this.totalData = res.data.statistics;
@@ -637,6 +683,10 @@ export default {
       margin-right: 60px;
     }
   }
+}
+.bcactive{
+  color: blue;
+  font-weight: bold;
 }
 </style>
 <style>

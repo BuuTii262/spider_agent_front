@@ -112,13 +112,17 @@ export default {
     fetchOrderData() {
       console.log(this.dateValue);
       let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+
+      const date = localStorage.getItem("searchDate");
+      console.log(JSON.parse(date));
+      if (this.data) {
+        myParams += `&start_date=${JSON.parse(date)[0]} 00:00:00`;
+        myParams += `&end_date=${JSON.parse(date)[1]} 23:59:59`;
+      }
       if (this.addParams.id) {
         myParams += `&agent_id=${this.addParams.id}`;
       } else if (this.$route.query.id) {
         myParams += `&agent_id=${this.$route.query.id}`;
-      }
-      if (this.dateValue.length) {
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
       this.listLoading = true;
       getOrders(myParams).then((res) => {

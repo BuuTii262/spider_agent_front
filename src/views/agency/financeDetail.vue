@@ -97,16 +97,18 @@ export default {
           return "从现货转入";
         case 12:
           return "从来理财转出";
+        default:
+          return "--";
       }
     },
     flowFilter(val) {
       switch (val) {
-        case 0:
-          return "-";
         case 1:
           return "增加";
         case 2:
           return "减少";
+        default:
+          return "--";
       }
     },
   },
@@ -131,6 +133,13 @@ export default {
       let myParams = `?`;
       if (this.addParams.id) {
         myParams += `uid=${this.addParams.id}`;
+      }
+      const date = localStorage.getItem("searchDate");
+      console.log(date)
+      console.log(JSON.parse(date));
+      if (this.date) {
+        myParams += `&start_date=${JSON.parse(date)[0]} 00:00:00`;
+        myParams += `&end_date=${JSON.parse(date)[1]} 23:59:59`;
       }
       myParams += `&page=${this.query.page}&page_size=${this.query.page_size}`;
       this.listLoading = true;
