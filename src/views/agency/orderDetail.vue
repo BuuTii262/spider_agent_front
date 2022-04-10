@@ -28,9 +28,9 @@
         </el-table-column>
         <el-table-column label="订单状态" align="center">
           <template slot-scope="scope">
-            <div v-if="scope.row.status == 1">正常</div>
-            <div v-if="scope.row.status == 2">违约</div>
-            <div v-if="scope.row.status == 3">结束</div>
+            <div v-if="scope.row.status == (-1)">正常</div>
+            <div v-if="scope.row.status == (-2)">违约</div>
+            <div v-if="scope.row.status == (-3)">结束</div>
           </template>
         </el-table-column>
         <el-table-column label="是否续约" align="center">
