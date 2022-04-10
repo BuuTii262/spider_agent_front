@@ -423,12 +423,16 @@ export default {
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
       } else {
         var today = new Date();
+        // if()
+        let month =
+        today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1
+        let day = today.getDate() < 10 ? '0' + today.getDate() : today.getDate()
         var date =
           today.getFullYear() +
           "-" +
-          (today.getMonth() + 1) +
+          month +
           "-" +
-          today.getDate();
+          day;
         console.log(this.dateValue);
         this.dateValue = [date, date];
       }
