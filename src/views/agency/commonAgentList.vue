@@ -426,6 +426,9 @@ export default {
       if (row.member_count === 0) {
         return false;
       }
+      if (!row.id) {
+        return false;
+      }
       if(this.breadCrump.length == 0){
         this.breadCrump.push(localStorage.getItem('currentId'))
       }
@@ -458,47 +461,54 @@ export default {
         return false;
       }
       console.log(row.id);
-
-      this.$router.push({
-        path: "/orderDetail",
-        query: { id: row.id },
-      });
+      if(row.id){
+        this.$router.push({
+          path: "/orderDetail",
+          query: { id: row.id },
+        });
+      }
     },
     searchOrderDetailsWithOrderCount(row) {
       if (row.order_count === 0) {
         return false;
       }
       console.log(row.id);
-      this.$router.push({
-        path: "/orderDetail",
-        query: { id: row.id },
-      });
+      if(row.id){
+        this.$router.push({
+          path: "/orderDetail",
+          query: { id: row.id },
+        });
+      }
     },
     searchFinace(row) {
       if (row.income === 0) {
         return false;
       }
-      this.$router.push({
-        path: "/financeDetail",
-        query: { id: row.id },
-      });
+      if(row.id){
+        this.$router.push({
+          path: "/financeDetail",
+          query: { id: row.id },
+        });
+      }
     },
     searchAllMember(row) {
       if (row.order_member_count === 0) {
         return false;
       }
-      console.log(row.id);
-      this.$router.push({
-        path: "/memberDetail",
-        query: { id: row.id },
-      });
+      if(row.id){
+        this.$router.push({
+          path: "/memberDetail",
+          query: { id: row.id },
+        });
+      }
+      
     },
     searchNewMember(row) {
       if (row.new_member === 0) {
         return false;
       }
-      console.log(row.id);
-      this.$router.push({
+      if(row.id){
+        this.$router.push({
         path: "/memberDetail",
         query: {
           id: row.id,
@@ -506,6 +516,7 @@ export default {
           endDate: this.dateValue[1],
         },
       });
+      }  
     },
 
     searchHandle() {
