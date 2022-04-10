@@ -449,9 +449,10 @@ export default {
       }else{
         this.breadCrump = [];
       }
-      
-
-
+      if(id == localStorage.getItem("currentId")){
+        this.addParams.id = "";
+        this.fetchData();
+      }
       this.addParams.id = id;
       this.fetchData();
     },
@@ -546,7 +547,7 @@ export default {
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`;
       }
-      if (this.dateValue.length) {
+      if (this.dateValue) {
         myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
       this.listLoading = true;
@@ -557,16 +558,13 @@ export default {
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
           this.totalData =res.data.statistics;
-          if(this.dataList.length < 1){
+          if(this.dataList == 0){
              this.TotalAllData = [];
           }else{
-            this.TotalAllData = this.dataList.concat(this.totalData)
-
+            this.TotalAllData = this.dataList.concat(this.totalData);
           }
-
-          this.TotalAllData = this.TotalAllData.reverse();
-
-          console.log(this.TotalAllData)
+          this.TotalAllData = this.TotalAllData.reverse();  
+          console.log(this.TotalAllData)        
           this.listLoading = false;
         }
       });
