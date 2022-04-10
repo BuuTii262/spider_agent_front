@@ -548,8 +548,12 @@ export default {
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
           this.totalData =res.data.statistics;
+          if(this.dataList.length < 1){
+             this.TotalAllData = [];
+          }else{
+            this.TotalAllData = this.dataList.concat(this.totalData)
+          }
 
-          this.TotalAllData = this.dataList.concat(this.totalData)
           this.TotalAllData = this.TotalAllData.reverse();
 
           console.log(this.TotalAllData)
