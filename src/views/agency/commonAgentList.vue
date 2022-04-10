@@ -68,11 +68,12 @@
           style="cursor: pointer"
         >
           <template slot-scope="scope">
-            <span @click="bcSearchId(id,index)" style="cursor: pointer;"
-            :class="addParams.id == id ? 'bcactive' : ''"
-            >{{
-              id
-            }}</span>
+            <span
+              @click="bcSearchId(id, index)"
+              style="cursor: pointer"
+              :class="addParams.id == id ? 'bcactive' : ''"
+              >{{ id }}</span
+            >
           </template>
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -100,11 +101,7 @@
             >
               {{ scope.row.username }}
             </div>
-            <div
-              v-else
-            >
-              -- 
-            </div>
+            <div v-else>--</div>
           </template>
         </el-table-column>
         <el-table-column label="团队总人数" align="center" prop="member_count">
@@ -171,7 +168,9 @@
           <template slot-scope="scope">
             <div
               @click="searchAllMember(scope.row)"
-              :class="scope.row.order_member_count > 0 && scope.row.id ? 'blue' : ''"
+              :class="
+                scope.row.order_member_count > 0 && scope.row.id ? 'blue' : ''
+              "
             >
               {{ scope.row.order_member_count }}
             </div>
@@ -193,7 +192,11 @@
         </el-table-column>
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
-            <div>{{ scope.row.created_at ? scope.row.created_at.split(" ")[0] : "--" }}</div>
+            <div>
+              {{
+                scope.row.created_at ? scope.row.created_at.split(" ")[0] : "--"
+              }}
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -354,7 +357,7 @@ export default {
   filters: {},
   data() {
     return {
-      cuId : 0,
+      cuId: 0,
       breadCrump: [],
       query: {
         page: 1,
@@ -383,7 +386,7 @@ export default {
       },
       totalData: [],
       dataList: [],
-      TotalAllData : [],
+      TotalAllData: [],
       modelPageOptions: {
         page: 1, //列表 -- 当前页码
         total: 0, //列表 -- 数据总数
@@ -429,32 +432,33 @@ export default {
       if (!row.id) {
         return false;
       }
-      if(this.breadCrump.length == 0){
-        this.breadCrump.push(localStorage.getItem('currentId'))
+      if (this.breadCrump.length == 0) {
+        this.breadCrump.push(localStorage.getItem("currentId"));
       }
       this.breadCrump.push(row.id);
       this.addParams.id = row.id;
       this.fetchData();
     },
-    bcSearchId(id,indexId) {
+    bcSearchId(id, indexId) {
       // this.breadCrump.remove(id)
       // const filter = this.breadCrump.filter(arr => {
       //   return arr != id
       // })
-      if(indexId != 0){
-        const filter = this.breadCrump.filter((arr,index)=>{
-        return index <= indexId
-      })
-      this.breadCrump  = filter
-      }else{
+      if (indexId != 0) {
+        const filter = this.breadCrump.filter((arr, index) => {
+          return index <= indexId;
+        });
+        this.breadCrump = filter;
+      } else {
         this.breadCrump = [];
       }
-      if(id == localStorage.getItem("currentId")){
+      if (id == localStorage.getItem("currentId")) {
         this.addParams.id = "";
         this.fetchData();
+      } else {
+        this.addParams.id = id;
+        this.fetchData();
       }
-      this.addParams.id = id;
-      this.fetchData();
     },
 
     searchOrderDetailsWithOrderAmount(row) {
@@ -462,7 +466,7 @@ export default {
         return false;
       }
       console.log(row.id);
-      if(row.id){
+      if (row.id) {
         this.$router.push({
           path: "/orderDetail",
           query: { id: row.id },
@@ -474,7 +478,7 @@ export default {
         return false;
       }
       console.log(row.id);
-      if(row.id){
+      if (row.id) {
         this.$router.push({
           path: "/orderDetail",
           query: { id: row.id },
@@ -485,7 +489,7 @@ export default {
       if (row.income === 0) {
         return false;
       }
-      if(row.id){
+      if (row.id) {
         this.$router.push({
           path: "/financeDetail",
           query: { id: row.id },
@@ -496,28 +500,27 @@ export default {
       if (row.order_member_count === 0) {
         return false;
       }
-      if(row.id){
+      if (row.id) {
         this.$router.push({
           path: "/memberDetail",
           query: { id: row.id },
         });
       }
-      
     },
     searchNewMember(row) {
       if (row.new_member === 0) {
         return false;
       }
-      if(row.id){
+      if (row.id) {
         this.$router.push({
-        path: "/memberDetail",
-        query: {
-          id: row.id,
-          startDate: this.dateValue[0],
-          endDate: this.dateValue[1],
-        },
-      });
-      }  
+          path: "/memberDetail",
+          query: {
+            id: row.id,
+            startDate: this.dateValue[0],
+            endDate: this.dateValue[1],
+          },
+        });
+      }
     },
 
     searchHandle() {
@@ -557,14 +560,14 @@ export default {
           // this.breadCrump.push(res.data.current_agent_id)
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
-          this.totalData =res.data.statistics;
-          if(this.dataList == 0){
-             this.TotalAllData = [];
-          }else{
+          this.totalData = res.data.statistics;
+          if (this.dataList == 0) {
+            this.TotalAllData = [];
+          } else {
             this.TotalAllData = this.dataList.concat(this.totalData);
           }
-          this.TotalAllData = this.TotalAllData.reverse();  
-          console.log(this.TotalAllData)        
+          this.TotalAllData = this.TotalAllData.reverse();
+          console.log(this.TotalAllData);
           this.listLoading = false;
         }
       });
@@ -710,7 +713,7 @@ export default {
     }
   }
 }
-.bcactive{
+.bcactive {
   color: blue;
   font-weight: bold;
 }
