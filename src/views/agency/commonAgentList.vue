@@ -19,8 +19,6 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            :editable="false"
-            :clearable="false"
           >
           </el-date-picker>
         </el-form-item>
@@ -97,7 +95,7 @@
           <template slot-scope="scope">
             <div
               @click="searchID(scope.row)"
-              :class="scope.row.member_count > 0 ? 'blue' : ''"
+              :class="scope.row.member_count > 0 && scope.row.id ? 'blue' : ''"
               v-if="scope.row.username"
             >
               {{ scope.row.username }}
@@ -127,7 +125,7 @@
           <template slot-scope="scope">
             <div
               @click="searchOrderDetailsWithOrderAmount(scope.row)"
-              :class="scope.row.order_amount > 0 ? 'blue' : ''"
+              :class="scope.row.order_amount > 0 && scope.row.id ? 'blue' : ''"
             >
               {{ scope.row.order_amount }}
             </div>
@@ -137,7 +135,7 @@
           <template slot-scope="scope">
             <div
               @click="searchOrderDetailsWithOrderCount(scope.row)"
-              :class="scope.row.order_count > 0 ? 'blue' : ''"
+              :class="scope.row.order_count > 0 && scope.row.id ? 'blue' : ''"
             >
               {{ scope.row.order_count }}
             </div>
@@ -159,7 +157,7 @@
           <template slot-scope="scope">
             <div
               @click="searchFinace(scope.row)"
-              :class="scope.row.income > 0 ? 'blue' : ''"
+              :class="scope.row.income > 0 && scope.row.id ? 'blue' : ''"
             >
               {{ scope.row.income }}
             </div>
@@ -173,7 +171,7 @@
           <template slot-scope="scope">
             <div
               @click="searchAllMember(scope.row)"
-              :class="scope.row.order_member_count > 0 ? 'blue' : ''"
+              :class="scope.row.order_member_count > 0 && scope.row.id ? 'blue' : ''"
             >
               {{ scope.row.order_member_count }}
             </div>
@@ -183,7 +181,7 @@
           <template slot-scope="scope">
             <div
               @click="searchNewMember(scope.row)"
-              :class="scope.row.new_member > 0 ? 'blue' : ''"
+              :class="scope.row.new_member > 0 && scope.row.id ? 'blue' : ''"
             >
               {{ scope.row.new_member }}
             </div>
@@ -552,6 +550,7 @@ export default {
              this.TotalAllData = [];
           }else{
             this.TotalAllData = this.dataList.concat(this.totalData)
+
           }
 
           this.TotalAllData = this.TotalAllData.reverse();
