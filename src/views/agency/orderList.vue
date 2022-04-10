@@ -188,10 +188,7 @@ export default {
       },
       dataList: [],
       listLoading: true,
-      dateValue: [
-        new Date().toISOString().slice(0, 10),
-        new Date().toISOString().slice(0, 10),
-      ],
+      dateValue: [],
       modelPageOptions: {
         page: 1, //列表 -- 当前页码
         total: 0, //列表 -- 数据总数

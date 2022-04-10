@@ -31,7 +31,7 @@
         </div>
       </el-form>
     </div>
-    <div class="wrap">
+    <!-- <div class="wrap">
       <div class="title">数据汇总</div>
       <div class="data-group">
         <div class="data-item">团队总人数：{{ totalData.member_count }}</div>
@@ -57,7 +57,7 @@
         <div class="data-item">余额：{{ totalData.agent_balance }}</div>
         <div class="data-item">团队余额：{{ totalData.team_balance }}</div>
       </div>
-    </div>
+    </div> -->
     <div class="wrap">
       <el-breadcrumb
         separator-class="el-icon-arrow-right"
@@ -80,21 +80,32 @@
       </el-breadcrumb>
       <el-table
         v-loading="listLoading"
-        :data="dataList"
+        :data="TotalAllData"
         element-loading-text="Loading"
         border
         fit
         highlight-current-row
       >
-        <el-table-column label="代理ID" align="center" prop="id">
+        <el-table-column label="代理ID" align="center">
+          <template slot-scope="scope">
+            <div>
+              {{ scope.row.id ? scope.row.id : "汇总" }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="代理账号" align="center">
           <template slot-scope="scope">
             <div
               @click="searchID(scope.row)"
               :class="scope.row.member_count > 0 ? 'blue' : ''"
+              v-if="scope.row.username"
             >
               {{ scope.row.username }}
+            </div>
+            <div
+              v-else
+            >
+              -- 
             </div>
           </template>
         </el-table-column>
@@ -184,7 +195,7 @@
         </el-table-column>
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
-            <div>{{ scope.row.created_at.split(" ")[0] }}</div>
+            <div>{{ scope.row.created_at ? scope.row.created_at.split(" ")[0] : "--" }}</div>
           </template>
         </el-table-column>
       </el-table>
@@ -356,17 +367,13 @@ export default {
         end_date: "",
         id: "",
       },
-      dataList: [],
       listLoading: true,
       TransferDialog: false,
       editDialog: false,
       addDialog: false,
       memberDialog: false,
       dateOfSearch: [],
-      dateValue: [
-        new Date().toISOString().slice(0, 10),
-        new Date().toISOString().slice(0, 10),
-      ],
+      dateValue: [],
       createForm: {
         agent_id: "",
         password: "",
@@ -376,7 +383,9 @@ export default {
         user_name: "",
         password: "",
       },
-      totalData: {},
+      totalData: [],
+      dataList: [],
+      TotalAllData : [],
       modelPageOptions: {
         page: 1, //列表 -- 当前页码
         total: 0, //列表 -- 数据总数
@@ -538,7 +547,12 @@ export default {
           // this.breadCrump.push(res.data.current_agent_id)
           this.modelPageOptions.total = res.data.total;
           this.dataList = res.data.agents;
-          this.totalData = res.data.statistics;
+          this.totalData =res.data.statistics;
+
+          this.TotalAllData = this.dataList.concat(this.totalData)
+          this.TotalAllData = this.TotalAllData.reverse();
+
+          console.log(this.TotalAllData)
           this.listLoading = false;
         }
       });
