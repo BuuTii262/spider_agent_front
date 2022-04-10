@@ -121,7 +121,7 @@
           prop="total_withdraw_pending"
         >
         </el-table-column>
-        <el-table-column label="充提差" align="center" prop="benifit">
+        <el-table-column label="充提差" align="center" prop="benefit">
         </el-table-column>
         <el-table-column label="订单金额" align="center">
           <template slot-scope="scope">
