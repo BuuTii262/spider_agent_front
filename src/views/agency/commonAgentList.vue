@@ -421,6 +421,16 @@ export default {
       if (localStorage.getItem("searchDate")) {
         console.log(JSON.parse(localStorage.getItem("searchDate")));
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+      } else {
+        var today = new Date();
+        var date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate();
+        console.log(this.dateValue);
+        this.dateValue = [date, date];
       }
     },
     //If click it will search that ID's lists
