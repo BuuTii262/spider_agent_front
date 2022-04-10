@@ -421,21 +421,22 @@ export default {
       if (localStorage.getItem("searchDate")) {
         console.log(JSON.parse(localStorage.getItem("searchDate")));
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
-      } else {
-        var today = new Date();
-        // if()
-        let month =
-        today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1
-        let day = today.getDate() < 10 ? '0' + today.getDate() : today.getDate()
-        var date =
-          today.getFullYear() +
-          "-" +
-          month +
-          "-" +
-          day;
-        console.log(this.dateValue);
-        this.dateValue = [date, date];
       }
+      // else {
+      //   // var today = new Date();
+      //   // // if()
+      //   // let month =
+      //   // today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1
+      //   // let day = today.getDate() < 10 ? '0' + today.getDate() : today.getDate()
+      //   // var date =
+      //   //   today.getFullYear() +
+      //   //   "-" +
+      //   //   month +
+      //   //   "-" +
+      //   //   day;
+      //   // console.log(this.dateValue);
+      //   // this.dateValue = [date, date];
+      // }
     },
     //If click it will search that ID's lists
     searchID(row) {
@@ -538,7 +539,9 @@ export default {
     },
 
     searchHandle() {
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
+      if (this.dateValue) {
+        localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
+      }
       this.query.page = 1;
       this.fetchData();
     },
@@ -564,6 +567,10 @@ export default {
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`;
       }
+      // if (this.dateValue) {
+      //   myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
+      // }
+      this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
       if (this.dateValue) {
         myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
