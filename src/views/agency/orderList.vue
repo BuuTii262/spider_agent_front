@@ -251,11 +251,15 @@ export default {
     OrderResult(val) {
       switch (val) {
         case 1:
-          return "正常";
-        case 2:
-          return "违约";
+          return "进行中";
         case 3:
-          return "结束";
+          return "完成";
+        case 2:
+          return "已赎回";
+        case -3:
+          return "拒绝";
+        case -1:
+          return "待审核";
       }
     },
   },
