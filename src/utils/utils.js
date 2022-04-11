@@ -1,9 +1,9 @@
 import {
-  formatTime,
+  formatTime
 
-} from './common-method';
+} from './common-method'
 export {
 
-  formatTime,
+  formatTime
 
-};
+}

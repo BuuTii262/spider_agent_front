@@ -14,13 +14,13 @@ import pathToRegexp from 'path-to-regexp'
 export default {
   data() {
     return {
-      levelList: null,
+      levelList: null
     }
   },
   watch: {
     $route() {
       this.getBreadcrumb()
-    },
+    }
   },
   created() {
     this.getBreadcrumb()
@@ -28,7 +28,7 @@ export default {
   methods: {
     getBreadcrumb() {
       // only show routes with meta.title
-      let matched = this.$route.matched.filter(
+      const matched = this.$route.matched.filter(
         (item) => item.meta && item.meta.title
       )
       const first = matched[0]
@@ -64,8 +64,8 @@ export default {
         return
       }
       this.$router.push(this.pathCompile(path))
-    },
-  },
+    }
+  }
 }
 </script>
 

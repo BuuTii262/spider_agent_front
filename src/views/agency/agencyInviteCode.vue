@@ -2,10 +2,12 @@
   <div class="app-container">
     <div class="search-wrap wrap">
       <p class="label">邀请码 :</p>
-      <p class="copy_value" id="copy_value">{{ inviteCode }}</p>
-      <el-button class="copy_btn" type="primary" @click="copyFunction()"
-        >Copy</el-button
-      >
+      <p id="copy_value" class="copy_value">{{ inviteCode }}</p>
+      <el-button
+        class="copy_btn"
+        type="primary"
+        @click="copyFunction()"
+      >Copy</el-button>
     </div>
   </div>
 </template>
@@ -14,17 +16,17 @@
 export default {
   data() {
     return {
-      inviteCode: "https://www.spiderexpro.com/register?invite=" + localStorage.getItem('invite_code'),
-    };
+      inviteCode: 'https://www.spiderexpro.com/register?invite=' + localStorage.getItem('invite_code')
+    }
   },
   created() {},
   methods: {
     copyFunction() {
-      var copyText = document.getElementById("copy_value");
-      navigator.clipboard.writeText(copyText.innerHTML);
-    },
-  },
-};
+      var copyText = document.getElementById('copy_value')
+      navigator.clipboard.writeText(copyText.innerHTML)
+    }
+  }
+}
 </script>
 
 <style  lang="scss" scoped>

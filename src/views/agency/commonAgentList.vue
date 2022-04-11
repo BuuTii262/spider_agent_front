@@ -7,7 +7,7 @@
             v-model="addParams.id"
             placeholder="请输入代理UID"
             style="width: 200px"
-          ></el-input>
+          />
         </el-form-item>
         <el-form-item label="统计数据时间" style="width: 450px">
           <el-date-picker
@@ -19,8 +19,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-          >
-          </el-date-picker>
+          />
         </el-form-item>
         <div class="buttonBox" style="margin-bottom: 22px">
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
@@ -69,11 +68,10 @@
         >
           <template slot-scope="scope">
             <span
-              @click="bcSearchId(id, index)"
               style="cursor: pointer"
               :class="addParams.id == id ? 'bcactive' : ''"
-              >{{ id }}</span
-            >
+              @click="bcSearchId(id, index)"
+            >{{ id }}</span>
           </template>
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -95,34 +93,29 @@
         <el-table-column label="代理账号" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchID(scope.row)"
-              :class="scope.row.member_count > 0 && scope.row.id ? 'blue' : ''"
               v-if="scope.row.username"
+              :class="scope.row.member_count > 0 && scope.row.id ? 'blue' : ''"
+              @click="searchID(scope.row)"
             >
               {{ scope.row.username }}
             </div>
             <div v-else>--</div>
           </template>
         </el-table-column>
-        <el-table-column label="团队总人数" align="center" prop="member_count">
-        </el-table-column>
-        <el-table-column label="总充值" align="center" prop="total_deposit">
-        </el-table-column>
-        <el-table-column label="总提现" align="center" prop="total_withdraw">
-        </el-table-column>
+        <el-table-column label="团队总人数" align="center" prop="member_count" />
+        <el-table-column label="总充值" align="center" prop="total_deposit" />
+        <el-table-column label="总提现" align="center" prop="total_withdraw" />
         <el-table-column
           label="提现中"
           align="center"
           prop="total_withdraw_pending"
-        >
-        </el-table-column>
-        <el-table-column label="充提差" align="center" prop="benefit">
-        </el-table-column>
+        />
+        <el-table-column label="充提差" align="center" prop="benefit" />
         <el-table-column label="订单金额" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchOrderDetailsWithOrderAmount(scope.row)"
               :class="scope.row.order_amount > 0 && scope.row.id ? 'blue' : ''"
+              @click="searchOrderDetailsWithOrderAmount(scope.row)"
             >
               {{ scope.row.order_amount }}
             </div>
@@ -131,8 +124,8 @@
         <el-table-column label="订单数量" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchOrderDetailsWithOrderCount(scope.row)"
               :class="scope.row.order_count > 0 && scope.row.id ? 'blue' : ''"
+              @click="searchOrderDetailsWithOrderCount(scope.row)"
             >
               {{ scope.row.order_count }}
             </div>
@@ -142,19 +135,17 @@
           label="未结算订单数量"
           align="center"
           prop="pending_order_count"
-        >
-        </el-table-column>
+        />
         <el-table-column
           label="未结算订单金额"
           align="center"
           prop="pending_order_amount"
-        >
-        </el-table-column>
+        />
         <el-table-column label="总收益" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchFinace(scope.row)"
               :class="scope.row.income > 0 && scope.row.id ? 'blue' : ''"
+              @click="searchFinace(scope.row)"
             >
               {{ scope.row.income }}
             </div>
@@ -167,10 +158,10 @@
         <el-table-column label="活跃人数" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchAllMember(scope.row)"
               :class="
                 scope.row.order_member_count > 0 && scope.row.id ? 'blue' : ''
               "
+              @click="searchAllMember(scope.row)"
             >
               {{ scope.row.order_member_count }}
             </div>
@@ -179,17 +170,15 @@
         <el-table-column label="新增人数" align="center">
           <template slot-scope="scope">
             <div
-              @click="searchNewMember(scope.row)"
               :class="scope.row.new_member > 0 && scope.row.id ? 'blue' : ''"
+              @click="searchNewMember(scope.row)"
             >
               {{ scope.row.new_member }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="余额" align="center" prop="agent_balance">
-        </el-table-column>
-        <el-table-column label="团队余额" align="center" prop="team_balance">
-        </el-table-column>
+        <el-table-column label="余额" align="center" prop="agent_balance" />
+        <el-table-column label="团队余额" align="center" prop="team_balance" />
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
             <div>
@@ -204,13 +193,13 @@
       <div class="pagination" style="margin-bottom: 20px">
         <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="modelPageOptions.pageList"
             :page-size="modelPageOptions.pageSize"
             layout="total, sizes, prev, pager, next"
             :total="modelPageOptions.total"
-          ></el-pagination>
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </div>
       </div>
     </div>
@@ -234,8 +223,7 @@
             v-model="createForm.agent_id"
             show-word-limit
             placeholder="请输入上级代理账号"
-          >
-          </el-input>
+          />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -264,8 +252,7 @@
             v-model="createForm.password"
             show-word-limit
             placeholder="请输入修改的密码"
-          >
-          </el-input>
+          />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -294,16 +281,14 @@
             v-model="addForm.user_name"
             show-word-limit
             placeholder="请输入账号"
-          >
-          </el-input>
+          />
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
             v-model="addForm.password"
             show-word-limit
             placeholder="请输入修改的密码"
-          >
-          </el-input>
+          />
         </el-form-item>
         <!-- <el-form-item label="上级" prop="password">
           <el-input v-model="createForm.password" show-word-limit placeholder="请输入上级">
@@ -336,8 +321,7 @@
             v-model="createForm.memberId"
             show-word-limit
             placeholder="请输入会员ID"
-          >
-          </el-input>
+          />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -349,24 +333,24 @@
 </template>
 
 <script>
-import { getAgencyList } from "@/api/agency";
+import { getAgencyList } from '@/api/agency'
 // import
 
 export default {
-  props: ["data"],
   filters: {},
+  props: ['data'],
   data() {
     return {
       cuId: 0,
       breadCrump: [],
       query: {
         page: 1,
-        page_size: 10,
+        page_size: 10
       },
       addParams: {
-        start_date: "",
-        end_date: "",
-        id: "",
+        start_date: '',
+        end_date: '',
+        id: ''
       },
       listLoading: true,
       TransferDialog: false,
@@ -376,51 +360,51 @@ export default {
       dateOfSearch: [],
       dateValue: [],
       createForm: {
-        agent_id: "",
-        password: "",
-        memberId: "",
+        agent_id: '',
+        password: '',
+        memberId: ''
       },
       addForm: {
-        user_name: "",
-        password: "",
+        user_name: '',
+        password: ''
       },
       totalData: [],
       dataList: [],
       TotalAllData: [],
       modelPageOptions: {
-        page: 1, //列表 -- 当前页码
-        total: 0, //列表 -- 数据总数
-        pageSize: 10, //列表 -- 页码大小
-        pageList: [10, 20, 60, 80, 100], //列表 -- 当页显示多少数据
+        page: 1, // 列表 -- 当前页码
+        total: 0, // 列表 -- 数据总数
+        pageSize: 10, // 列表 -- 页码大小
+        pageList: [10, 20, 60, 80, 100] // 列表 -- 当页显示多少数据
       },
       rules: {
         agent_id: [
-          { required: true, trigger: "blur", message: "请输入上级代理账号!" },
+          { required: true, trigger: 'blur', message: '请输入上级代理账号!' }
         ],
         memberId: [
-          { required: true, trigger: "blur", message: "请输入会员ID!" },
+          { required: true, trigger: 'blur', message: '请输入会员ID!' }
         ],
 
-        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }]
       },
       pswrules: {
-        password: [{ required: true, trigger: "blur", message: "请输入密码!" }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码!' }],
         user_name: [
-          { required: true, trigger: "blur", message: "请输入代理账号!" },
-        ],
+          { required: true, trigger: 'blur', message: '请输入代理账号!' }
+        ]
       },
-      selectId: "",
-    };
+      selectId: ''
+    }
   },
   created() {
-    this.DateSearch();
-    this.fetchData();
+    this.DateSearch()
+    this.fetchData()
   },
   methods: {
     DateSearch() {
-      if (localStorage.getItem("searchDate")) {
-        console.log(JSON.parse(localStorage.getItem("searchDate")));
-        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+      if (localStorage.getItem('searchDate')) {
+        console.log(JSON.parse(localStorage.getItem('searchDate')))
+        this.dateValue = JSON.parse(localStorage.getItem('searchDate'))
       }
       // else {
       //   // var today = new Date();
@@ -438,21 +422,21 @@ export default {
       //   // this.dateValue = [date, date];
       // }
     },
-    //If click it will search that ID's lists
+    // If click it will search that ID's lists
     searchID(row) {
       // console.log(row,  event,  column)
       if (row.member_count === 0) {
-        return false;
+        return false
       }
       if (!row.id) {
-        return false;
+        return false
       }
       if (this.breadCrump.length == 0) {
-        this.breadCrump.push(localStorage.getItem("currentId"));
+        this.breadCrump.push(localStorage.getItem('currentId'))
       }
-      this.breadCrump.push(row.id);
-      this.addParams.id = row.id;
-      this.fetchData();
+      this.breadCrump.push(row.id)
+      this.addParams.id = row.id
+      this.fetchData()
     },
     bcSearchId(id, indexId) {
       // this.breadCrump.remove(id)
@@ -461,253 +445,253 @@ export default {
       // })
       if (indexId != 0) {
         const filter = this.breadCrump.filter((arr, index) => {
-          return index <= indexId;
-        });
-        this.breadCrump = filter;
+          return index <= indexId
+        })
+        this.breadCrump = filter
       } else {
-        this.breadCrump = [];
+        this.breadCrump = []
       }
-      if (id == localStorage.getItem("currentId")) {
-        this.addParams.id = "";
-        this.fetchData();
+      if (id == localStorage.getItem('currentId')) {
+        this.addParams.id = ''
+        this.fetchData()
       } else {
-        this.addParams.id = id;
-        this.fetchData();
+        this.addParams.id = id
+        this.fetchData()
       }
     },
 
     searchOrderDetailsWithOrderAmount(row) {
       if (row.order_amount === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
       if (row.id) {
         this.$router.push({
-          path: "/orderDetail",
-          query: { id: row.id },
-        });
+          path: '/orderDetail',
+          query: { id: row.id }
+        })
       }
     },
     searchOrderDetailsWithOrderCount(row) {
       if (row.order_count === 0) {
-        return false;
+        return false
       }
-      console.log(row.id);
+      console.log(row.id)
       if (row.id) {
         this.$router.push({
-          path: "/orderDetail",
-          query: { id: row.id },
-        });
+          path: '/orderDetail',
+          query: { id: row.id }
+        })
       }
     },
     searchFinace(row) {
       if (row.income === 0) {
-        return false;
+        return false
       }
       if (row.id) {
         this.$router.push({
-          path: "/financeDetail",
-          query: { id: row.id },
-        });
+          path: '/financeDetail',
+          query: { id: row.id }
+        })
       }
     },
     searchAllMember(row) {
       if (row.order_member_count === 0) {
-        return false;
+        return false
       }
       if (row.id) {
         this.$router.push({
-          path: "/memberDetail",
-          query: { id: row.id },
-        });
+          path: '/memberDetail',
+          query: { id: row.id }
+        })
       }
     },
     searchNewMember(row) {
       if (row.new_member === 0) {
-        return false;
+        return false
       }
       if (row.id) {
         this.$router.push({
-          path: "/memberDetail",
+          path: '/memberDetail',
           query: {
             id: row.id,
             startDate: this.dateValue[0],
-            endDate: this.dateValue[1],
-          },
-        });
+            endDate: this.dateValue[1]
+          }
+        })
       }
     },
 
     searchHandle() {
-      localStorage.removeItem("searchDate");
+      localStorage.removeItem('searchDate')
       if (this.dateValue && this.dateValue.length) {
-        localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
+        localStorage.setItem('searchDate', JSON.stringify(this.dateValue))
       }
       // if(this.dateValue && this.dateValue.length)
-      this.query.page = 1;
-      this.fetchData();
+      this.query.page = 1
+      this.fetchData()
     },
-    //调整每页展示的条数
+    // 调整每页展示的条数
     handleSizeChange(val) {
-      this.query.page_size = val;
-      console.log(val);
-      this.fetchData();
+      this.query.page_size = val
+      console.log(val)
+      this.fetchData()
     },
-    //当前的页数
+    // 当前的页数
     handleCurrentChange(val) {
-      this.query.page = val;
-      this.fetchData();
+      this.query.page = val
+      this.fetchData()
     },
     fetchData() {
       // console.log(this.dateValue);
-      let myParams = "";
+      let myParams = ''
       if (this.data) {
-        myParams = `${this.data}&page=${this.query.page}&page_size=${this.query.page_size}`;
+        myParams = `${this.data}&page=${this.query.page}&page_size=${this.query.page_size}`
       } else {
-        myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+        myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
       }
       if (this.addParams.id) {
-        myParams += `&uid=${this.addParams.id}`;
+        myParams += `&uid=${this.addParams.id}`
       }
       if (this.dateValue && this.dateValue.length) {
-        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
+        this.dateValue = JSON.parse(localStorage.getItem('searchDate'))
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
       }
-      this.listLoading = true;
+      this.listLoading = true
       getAgencyList(myParams).then((res) => {
         if (res.err_code == 0) {
           // this.breadCrump = this.breadCrump.concat(res.data.current_agent_id)
           // this.breadCrump.push(res.data.current_agent_id)
-          this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data.agents;
-          this.totalData = res.data.statistics;
+          this.modelPageOptions.total = res.data.total
+          this.dataList = res.data.agents
+          this.totalData = res.data.statistics
           if (this.dataList == 0) {
-            this.TotalAllData = [];
+            this.TotalAllData = []
           } else {
-            this.TotalAllData = this.dataList.concat(this.totalData);
+            this.TotalAllData = this.dataList.concat(this.totalData)
             // this.TotalAllData = this.dataList.concat(this.totalData);
           }
-          this.TotalAllData = this.TotalAllData.reverse();
-          console.log(this.TotalAllData);
-          this.listLoading = false;
+          this.TotalAllData = this.TotalAllData.reverse()
+          console.log(this.TotalAllData)
+          this.listLoading = false
         }
-      });
+      })
     },
     showDialog(type, row) {
-      this.selectId = row.Id;
-      //转移代理
-      if (type == "transfer") {
-        this.TransferDialog = true;
-      } else if (type == "edit") {
-        //编辑
-        this.editDialog = true;
+      this.selectId = row.Id
+      // 转移代理
+      if (type == 'transfer') {
+        this.TransferDialog = true
+      } else if (type == 'edit') {
+        // 编辑
+        this.editDialog = true
       } else {
-        //代理报表路由
+        // 代理报表路由
         this.$router.push({
-          path: "/finance",
-          query: { id: row.Id },
-        });
+          path: '/finance',
+          query: { id: row.Id }
+        })
       }
     },
     addMember() {
-      this.addDialog = true;
+      this.addDialog = true
     },
     mtransferA() {
-      this.memberDialog = true;
+      this.memberDialog = true
     },
     submit(type) {
       this.$refs.createForm.validate((valid) => {
         if (valid) {
-          if (type == "transfer") {
-            var reqFn = agentTrans;
+          if (type == 'transfer') {
+            var reqFn = agentTrans
             var parmasData = {
               id: this.selectId,
-              agent_id: Number(this.createForm.agent_id),
-            };
-            var msg = "转移代理成功";
-          } else if (type == "memberTran") {
-            var reqFn = agentToagent;
+              agent_id: Number(this.createForm.agent_id)
+            }
+            var msg = '转移代理成功'
+          } else if (type == 'memberTran') {
+            var reqFn = agentToagent
             var parmasData = {
-              id: Number(this.createForm.memberId),
-            };
-            var msg = "会员转代理成功！";
+              id: Number(this.createForm.memberId)
+            }
+            var msg = '会员转代理成功！'
           } else {
-            var reqFn = changePsw;
+            var reqFn = changePsw
             var parmasData = {
               agent_id: this.selectId,
-              password: this.createForm.password,
-            };
-            var msg = "修改密码成功";
+              password: this.createForm.password
+            }
+            var msg = '修改密码成功'
           }
           reqFn(parmasData).then((res) => {
             if (res.err_code == 0) {
-              this.$message.success(msg);
-              this.hideCreate();
-              this.fetchData();
+              this.$message.success(msg)
+              this.hideCreate()
+              this.fetchData()
             } else {
-              this.$message.error(res.err_msg);
-              this.createForm.agent_id = "";
-              this.createForm.password = "";
+              this.$message.error(res.err_msg)
+              this.createForm.agent_id = ''
+              this.createForm.password = ''
             }
-          });
+          })
         }
-      });
+      })
     },
     submitAdd() {
       this.$refs.addForm.validate((valid) => {
         if (valid) {
           var parmasData = {
             user_name: this.addForm.user_name,
-            password: this.addForm.password,
-          };
+            password: this.addForm.password
+          }
           addAgent(parmasData).then((res) => {
-            console.log(123);
+            console.log(123)
             if (res.err_code == 0) {
-              this.$message.success("添加代理成功");
-              this.hideAddCreate();
-              this.fetchData();
+              this.$message.success('添加代理成功')
+              this.hideAddCreate()
+              this.fetchData()
             } else {
-              this.addForm.user_name = "";
-              this.addForm.password = "";
+              this.addForm.user_name = ''
+              this.addForm.password = ''
             }
-          });
+          })
         }
-      });
+      })
     },
     hideCreate() {
-      this.TransferDialog = false;
-      this.editDialog = false;
-      this.memberDialog = false;
-      this.addDialog = false;
+      this.TransferDialog = false
+      this.editDialog = false
+      this.memberDialog = false
+      this.addDialog = false
       this.createForm = {
-        agent_id: "",
-        memberId: "",
-      };
+        agent_id: '',
+        memberId: ''
+      }
       this.addForm = {
-        user_name: "",
-        password: "",
-      };
+        user_name: '',
+        password: ''
+      }
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.createForm.resetFields();
-          this.$refs.addForm.resetFields();
-        }, 500);
-      });
+          this.$refs.createForm.resetFields()
+          this.$refs.addForm.resetFields()
+        }, 500)
+      })
     },
     hideAddCreate() {
-      this.addDialog = false;
+      this.addDialog = false
       this.addForm = {
-        user_name: "",
-        password: "",
-      };
+        user_name: '',
+        password: ''
+      }
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.addForm.resetFields();
-        }, 500);
-      });
-    },
-  },
-};
+          this.$refs.addForm.resetFields()
+        }, 500)
+      })
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .blue {

@@ -17,14 +17,14 @@
       <div class="pagination" style="margin-bottom: 20px">
         <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="modelPageOptions.pageList"
             :page-size="modelPageOptions.pageSize"
             layout="total, sizes, prev, pager, next"
             :total="modelPageOptions.total"
             disabled
-          ></el-pagination>
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getMembersDetail } from "@/api/agency";
+import { getMembersDetail } from '@/api/agency'
 
 export default {
   filters: {},
@@ -40,74 +40,74 @@ export default {
     return {
       query: {
         page: 1,
-        page_size: 10,
+        page_size: 10
       },
       addParams: {
-        start_date: "",
-        end_date: "",
-        id: "",
+        start_date: '',
+        end_date: '',
+        id: ''
       },
       dataList: [],
       listLoading: true,
       dateValue: [],
       modelPageOptions: {
-        page: 1, //列表 -- 当前页码
-        total: 0, //列表 -- 数据总数
-        pageSize: 10, //列表 -- 页码大小
-        pageList: [10, 20, 60, 80, 100], //列表 -- 当页显示多少数据
-      },
-    };
+        page: 1, // 列表 -- 当前页码
+        total: 0, // 列表 -- 数据总数
+        pageSize: 10, // 列表 -- 页码大小
+        pageList: [10, 20, 60, 80, 100] // 列表 -- 当页显示多少数据
+      }
+    }
   },
   created() {
-    console.log(this.$route.query.id + " = H ah aha ha");
+    console.log(this.$route.query.id + ' = H ah aha ha')
 
-    this.$route.query.id ? (this.addParams.id = this.$route.query.id) : "";
+    this.$route.query.id ? (this.addParams.id = this.$route.query.id) : ''
 
     this.$route.query.startDate && this.$route.query.endDate
       ? (this.dateValue = [
-          this.$route.query.startDate,
-          this.$route.query.endDate,
-        ])
-      : (this.dateValue = []);
+        this.$route.query.startDate,
+        this.$route.query.endDate
+      ])
+      : (this.dateValue = [])
 
-    this.fetchOrderData();
+    this.fetchOrderData()
   },
   methods: {
     searchHandle() {
-      this.query.page = 1;
-      this.fetchOrderData();
+      this.query.page = 1
+      this.fetchOrderData()
     },
-    //调整每页展示的条数
+    // 调整每页展示的条数
     handleSizeChange(val) {
-      this.query.page_size = val;
-      console.log(val);
-      this.fetchOrderData();
+      this.query.page_size = val
+      console.log(val)
+      this.fetchOrderData()
     },
-    //当前的页数
+    // 当前的页数
     handleCurrentChange(val) {
-      this.query.page = val;
-      this.fetchOrderData();
+      this.query.page = val
+      this.fetchOrderData()
     },
     fetchOrderData() {
-      console.log(this.dateValue);
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      console.log(this.dateValue)
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
       if (this.addParams.id) {
-        myParams += `&agent_id=${this.addParams.id}`;
+        myParams += `&agent_id=${this.addParams.id}`
       }
       if (this.dateValue.length) {
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
       }
-      this.listLoading = true;
+      this.listLoading = true
       getMembersDetail(myParams).then((res) => {
         if (res.err_code == 0) {
-          this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data;
-          this.listLoading = false;
+          this.modelPageOptions.total = res.data.total
+          this.dataList = res.data
+          this.listLoading = false
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .blue {

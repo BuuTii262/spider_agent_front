@@ -11,7 +11,7 @@
       <div class="title-container">
         <h3 class="title">Login Form</h3>
       </div>
-      <el-tabs class="tabs" v-model="activeName">
+      <el-tabs v-model="activeName" class="tabs">
         <el-tab-pane label="手机" name="first">
           <el-form-item prop="username">
             <span class="svg-container">
@@ -21,14 +21,13 @@
                   :key="`99999999${index}`"
                   :label="item"
                   :value="item"
-                >
-                </el-option>
+                />
               </el-select>
             </span>
             <el-input
-              class="phin"
               ref="username"
               v-model="loginForm.username"
+              class="phin"
               placeholder="手机号码"
               name="username"
               type="text"
@@ -60,7 +59,7 @@
         </el-tab-pane>
         <el-tab-pane label="邮箱" name="second">
           <el-form-item prop="username">
-            <span class="svg-container"> </span>
+            <span class="svg-container" />
             <el-input
               ref="username"
               v-model="loginForm.username"
@@ -102,8 +101,7 @@
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
       >
-        登录</el-button
-      >
+        登录</el-button>
 
       <!-- <div class="tips">
         <span style="margin-right: 20px">username: admin</span>
@@ -146,28 +144,28 @@ export default {
       activeName: 'first',
       loginForm: {
         username: '',
-        password: '',
+        password: ''
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', validator: '请输入用户名' },
+          { required: true, trigger: 'blur', validator: '请输入用户名' }
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword },
-        ],
+          { required: true, trigger: 'blur', validator: validatePassword }
+        ]
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined,
+      redirect: undefined
     }
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     setname() {
@@ -194,7 +192,7 @@ export default {
                 : this.code + '-' + this.loginForm.username,
             password:
               this.$md5(this.loginForm.password) +
-              Math.round(new Date().getTime() / 1000).toString(),
+              Math.round(new Date().getTime() / 1000).toString()
           }
           localStorage.setItem('username', this.loginForm.username)
 
@@ -212,8 +210,8 @@ export default {
           return false
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

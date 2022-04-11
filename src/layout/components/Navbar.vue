@@ -7,11 +7,11 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <span>{{username}}</span>
+          <span>{{ username }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <el-dropdown-item  @click.native="logout">
+          <el-dropdown-item @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -26,17 +26,17 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
-  data() {
-    return {
-      username: localStorage.getItem('username') || '',
-    }
-  },
   components: {
     Breadcrumb,
-    Hamburger,
+    Hamburger
+  },
+  data() {
+    return {
+      username: localStorage.getItem('username') || ''
+    }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name']),
+    ...mapGetters(['sidebar', 'avatar', 'name'])
   },
   methods: {
     toggleSideBar() {
@@ -46,12 +46,12 @@ export default {
     logout() {
       // await this.$store.dispatch('user/logout')
       document.cookie =
-        'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
-      localStorage.clear();
+        'vue_admin_template_token' + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;'
+      localStorage.clear()
       // this.$router.push('/Login')
       location.reload()
-    },
-  },
+    }
+  }
 }
 </script>
 

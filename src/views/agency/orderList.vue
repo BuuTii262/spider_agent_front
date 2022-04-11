@@ -26,8 +26,7 @@
               :key="index"
               :value="item.value"
               :label="item.label"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item
@@ -35,7 +34,7 @@
           label-width="150px"
           style="margin-right: 30px; min-width: 200px"
         >
-          <el-input v-model="uid" placeholder="请输入用户UID"></el-input>
+          <el-input v-model="uid" placeholder="请输入用户UID" />
         </el-form-item>
         <el-form-item
           label="产品名称"
@@ -45,7 +44,7 @@
           <el-input
             v-model="product_status"
             placeholder="输入产品名称"
-          ></el-input>
+          />
         </el-form-item>
         <el-form-item
           label="订单状态 "
@@ -65,8 +64,7 @@
               :key="index"
               :value="item.value"
               :label="item.label"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
 
@@ -86,8 +84,7 @@
             end-placeholder="结束日期"
             :editable="false"
             :clearable="false"
-          >
-          </el-date-picker>
+          />
         </el-form-item>
         <div style="margin-top: 50px" class="buttonBox">
           <el-button type="primary" @click="searchHandle()">搜索</el-button>
@@ -148,8 +145,7 @@
         <el-table-column label="审核结果" align="center">
           <template slot-scope="scope">
             <div>
-              <span>类型 : </span
-              >{{ scope.row.order_type == 1 ? "买入" : "Sell" }}
+              <span>类型 : </span>{{ scope.row.order_type == 1 ? "买入" : "Sell" }}
             </div>
             <div><span>结果 : </span>{{ scope.row.result | OrderResult }}</div>
             <div><span>用户 : </span>{{ scope.row.username }}</div>
@@ -162,13 +158,13 @@
       <div class="pagination" style="margin-bottom: 20px">
         <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="modelPageOptions.pageList"
             :page-size="modelPageOptions.pageSize"
             layout="total, sizes, prev, pager, next"
             :total="modelPageOptions.total"
-          ></el-pagination>
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </div>
       </div>
     </div>
@@ -176,199 +172,197 @@
 </template>
 
 <script>
-import { getAgentOrders } from "@/api/agency";
+import { getAgentOrders } from '@/api/agency'
 
 export default {
-  data() {
-    return {
-      user_name: localStorage.getItem("username") || "",
-      query: {
-        page: 1,
-        page_size: 10,
-      },
-      dataList: [],
-      listLoading: true,
-      dateValue: [],
-      modelPageOptions: {
-        page: 1, //列表 -- 当前页码
-        total: 0, //列表 -- 数据总数
-        pageSize: 10, //列表 -- 页码大小
-        pageList: [10, 20, 60, 80, 100], //列表 -- 当页显示多少数据
-      },
-      user_type: "",
-      uid: "",
-      product_status: "",
-      order_status: "",
-      formOptions: {
-        TimeStart: "",
-        TimeEnd: "",
-      },
-    };
-  },
   filters: {
     billingCycle(val) {
       switch (val) {
-        case "min":
-          return "分钟";
-        case "hour":
-          return "小时";
-        case "day":
-          return "天";
-        case "mon":
-          return "月";
+        case 'min':
+          return '分钟'
+        case 'hour':
+          return '小时'
+        case 'day':
+          return '天'
+        case 'mon':
+          return '月'
         default:
-          return "--";
+          return '--'
       }
     },
     isReNew(val) {
       switch (val) {
-        case 0:
-          return "--";
         case 1:
-          return "是";
-        case 2:
-          return "否";
+          return '是'
+        default:
+          return '否'
       }
     },
     FinanceType(val) {
       switch (val) {
         case 1:
-          return "活期";
+          return '活期'
         case 2:
-          return "定期";
+          return '定期'
         case 3:
-          return "拼单";
+          return '拼单'
       }
     },
     isAudit(val) {
       switch (val) {
-        case val == true:
-          return "是";
-        case val == false:
-          return "否";
+        case val === true:
+          return '是'
+        case val === false:
+          return '否'
       }
     },
     OrderResult(val) {
       switch (val) {
         case 1:
-          return "进行中";
+          return '进行中'
         case 3:
-          return "完成";
+          return '完成'
         case 2:
-          return "已赎回";
+          return '已赎回'
         case -3:
-          return "拒绝";
+          return '拒绝'
         case -1:
-          return "待审核";
+          return '待审核'
       }
-    },
+    }
+  },
+  data() {
+    return {
+      user_name: localStorage.getItem('username') || '',
+      query: {
+        page: 1,
+        page_size: 10
+      },
+      dataList: [],
+      listLoading: true,
+      dateValue: [],
+      modelPageOptions: {
+        page: 1, // 列表 -- 当前页码
+        total: 0, // 列表 -- 数据总数
+        pageSize: 10, // 列表 -- 页码大小
+        pageList: [10, 20, 60, 80, 100] // 列表 -- 当页显示多少数据
+      },
+      user_type: '',
+      uid: '',
+      product_status: '',
+      order_status: '',
+      formOptions: {
+        TimeStart: '',
+        TimeEnd: ''
+      }
+    }
   },
   computed: {
     User_Type() {
-      let result = [
+      const result = [
         {
-          value: "",
-          label: "全部",
+          value: '',
+          label: '全部'
         },
         {
-          value: "Normal",
-          label: "会员",
+          value: 'Normal',
+          label: '会员'
         },
         {
-          value: "Test",
-          label: "代理",
-        },
-      ];
-      return result;
+          value: 'Test',
+          label: '代理'
+        }
+      ]
+      return result
     },
     Order_Status() {
-      let result = [
+      const result = [
         {
-          value: "",
-          label: "全部",
+          value: '',
+          label: '全部'
         },
         {
-          value: "1",
-          label: "进行中",
+          value: '1',
+          label: '进行中'
         },
         {
-          value: "3",
-          label: "完成",
+          value: '3',
+          label: '完成'
         },
         {
-          value: "2",
-          label: "已赎回",
+          value: '2',
+          label: '已赎回'
         },
         {
-          value: "-3",
-          label: "拒绝",
+          value: '-3',
+          label: '拒绝'
         },
         {
-          value: "-1",
-          label: "待审核",
-        },
-      ];
-      return result;
-    },
+          value: '-1',
+          label: '待审核'
+        }
+      ]
+      return result
+    }
   },
   created() {
     // console.log();
-    this.DateSearch();
-    this.fetchData();
+    this.DateSearch()
+    this.fetchData()
   },
   methods: {
     DateSearch() {
-      if (localStorage.getItem("searchDate")) {
-        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
-        console.log(this.dateValue);
+      if (localStorage.getItem('searchDate')) {
+        this.dateValue = JSON.parse(localStorage.getItem('searchDate'))
+        console.log(this.dateValue)
       }
     },
     handleSizeChange(val) {
-      this.query.page_size = val;
-      console.log(val);
-      this.fetchData();
+      this.query.page_size = val
+      console.log(val)
+      this.fetchData()
     },
-    //当前的页数
+    // 当前的页数
     handleCurrentChange(val) {
-      this.query.page = val;
-      this.fetchData();
+      this.query.page = val
+      this.fetchData()
     },
     searchHandle() {
-      localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
-      this.query.page = 1;
-      this.fetchData();
+      localStorage.setItem('searchDate', JSON.stringify(this.dateValue))
+      this.query.page = 1
+      this.fetchData()
     },
     fetchData() {
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
 
       if (this.user_type) {
-        myParams += `&user_type=${this.user_type}`;
+        myParams += `&user_type=${this.user_type}`
       }
       if (this.uid) {
-        myParams += `&uid=${this.uid}`;
+        myParams += `&uid=${this.uid}`
       }
       if (this.product_status) {
-        myParams += `&product_name=${this.product_status}`;
+        myParams += `&product_name=${this.product_status}`
       }
       if (this.order_status) {
-        myParams += `&order_status=${this.order_status}`;
+        myParams += `&order_status=${this.order_status}`
       }
       if (this.dateValue.length) {
-        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
+        myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`
       }
-      console.log(myParams);
-      this.listLoading = true;
+      console.log(myParams)
+      this.listLoading = true
       getAgentOrders(myParams).then((res) => {
-        if (res.err_code == 0) {
-          this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data.orders;
+        if (res.err_code === 0) {
+          this.modelPageOptions.total = res.data.total
+          this.dataList = res.data.orders
 
-          this.listLoading = false;
+          this.listLoading = false
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .blue {

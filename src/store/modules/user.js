@@ -1,14 +1,14 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import Md5 from "@/utils/md5";
+import Md5 from '@/utils/md5'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
     avatar: '',
-    invite_code: '',
+    invite_code: ''
   }
 }
 
@@ -42,10 +42,10 @@ const actions = {
         commit('SET_TOKEN', data.user_token)
         setToken(data.user_token)
         commit('SET_INVITE_CODE', data.invite_code)
-        localStorage.setItem('invite_code', data.invite_code);
-        localStorage.setItem('currentId', data.login_agent_id);
+        localStorage.setItem('invite_code', data.invite_code)
+        localStorage.setItem('currentId', data.login_agent_id)
         // Cookies.set('invite_code', data.invite_code)
-        commit('SET_NAME',userInfo)
+        commit('SET_NAME', userInfo)
         resolve()
       }).catch(error => {
         reject(error)
@@ -77,11 +77,11 @@ const actions = {
 
   // user logout
   logout({ commit }) {
-      commit('SET_TOKEN', '')
-      commit('SET_NAME', '')
-      commit('SET_INVITE_CODE', '')
-      setToken('')
-      resolve()
+    commit('SET_TOKEN', '')
+    commit('SET_NAME', '')
+    commit('SET_INVITE_CODE', '')
+    setToken('')
+    resolve()
   },
 
   // remove token

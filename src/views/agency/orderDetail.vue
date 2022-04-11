@@ -9,10 +9,8 @@
         fit
         highlight-current-row
       >
-        <el-table-column label="UID" align="center" prop="user_id">
-        </el-table-column>
-        <el-table-column label="用户名" align="center" prop="username">
-        </el-table-column>
+        <el-table-column label="UID" align="center" prop="user_id" />
+        <el-table-column label="用户名" align="center" prop="username" />
         <el-table-column label="所属代理" align="center">
           <template slot-scope="scope">
             <div>
@@ -22,10 +20,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="订单名称" align="center" prop="period">
-        </el-table-column>
-        <el-table-column label="订单金额" align="center" prop="amount">
-        </el-table-column>
+        <el-table-column label="订单名称" align="center" prop="period" />
+        <el-table-column label="订单金额" align="center" prop="amount" />
         <el-table-column label="订单状态" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.status == 1">正常</div>
@@ -38,22 +34,20 @@
             <div>{{ scope.row.renew == "1" ? "是" : "否" }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="订单开始时间" align="center" prop="created_at">
-        </el-table-column>
-        <el-table-column label="订单结束时间" align="center" prop="ended_at">
-        </el-table-column>
+        <el-table-column label="订单开始时间" align="center" prop="created_at" />
+        <el-table-column label="订单结束时间" align="center" prop="ended_at" />
       </el-table>
 
       <div class="pagination" style="margin-bottom: 20px">
         <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="modelPageOptions.pageList"
             :page-size="modelPageOptions.pageSize"
             layout="total, sizes, prev, pager, next"
             :total="modelPageOptions.total"
-          ></el-pagination>
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </div>
       </div>
     </div>
@@ -61,7 +55,7 @@
 </template>
 
 <script>
-import { getOrders } from "@/api/agency";
+import { getOrders } from '@/api/agency'
 
 export default {
   filters: {},
@@ -69,73 +63,73 @@ export default {
     return {
       query: {
         page: 1,
-        page_size: 10,
+        page_size: 10
       },
       addParams: {
-        start_date: "",
-        end_date: "",
-        id: "",
+        start_date: '',
+        end_date: '',
+        id: ''
       },
       dataList: [],
       listLoading: true,
       dateValue: [],
       totalData: {},
       modelPageOptions: {
-        page: 1, //列表 -- 当前页码
-        total: 0, //列表 -- 数据总数
-        pageSize: 10, //列表 -- 页码大小
-        pageList: [10, 20, 60, 80, 100], //列表 -- 当页显示多少数据
-      },
-    };
+        page: 1, // 列表 -- 当前页码
+        total: 0, // 列表 -- 数据总数
+        pageSize: 10, // 列表 -- 页码大小
+        pageList: [10, 20, 60, 80, 100] // 列表 -- 当页显示多少数据
+      }
+    }
   },
   created() {
-    console.log(this.$route.query.id + " = H ah aha ha");
-    this.$route.query.id ? (this.addParams.id = this.$route.query.id) : "";
-    this.fetchOrderData();
+    console.log(this.$route.query.id + ' = H ah aha ha')
+    this.$route.query.id ? (this.addParams.id = this.$route.query.id) : ''
+    this.fetchOrderData()
   },
   methods: {
     searchHandle() {
-      this.query.page = 1;
-      this.fetchOrderData();
+      this.query.page = 1
+      this.fetchOrderData()
     },
-    //调整每页展示的条数
+    // 调整每页展示的条数
     handleSizeChange(val) {
-      this.query.page_size = val;
-      console.log(val);
-      this.fetchOrderData();
+      this.query.page_size = val
+      console.log(val)
+      this.fetchOrderData()
     },
-    //当前的页数
+    // 当前的页数
     handleCurrentChange(val) {
-      this.query.page = val;
-      this.fetchOrderData();
+      this.query.page = val
+      this.fetchOrderData()
     },
     fetchOrderData() {
-      console.log(this.dateValue);
-      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`;
+      console.log(this.dateValue)
+      let myParams = `?page=${this.query.page}&page_size=${this.query.page_size}`
 
-      const date = localStorage.getItem("searchDate");
-      console.log(JSON.parse(date));
+      const date = localStorage.getItem('searchDate')
+      console.log(JSON.parse(date))
       if (this.data) {
-        myParams += `&start_date=${JSON.parse(date)[0]} 00:00:00`;
-        myParams += `&end_date=${JSON.parse(date)[1]} 23:59:59`;
+        myParams += `&start_date=${JSON.parse(date)[0]} 00:00:00`
+        myParams += `&end_date=${JSON.parse(date)[1]} 23:59:59`
       }
       if (this.addParams.id) {
-        myParams += `&agent_id=${this.addParams.id}`;
+        myParams += `&agent_id=${this.addParams.id}`
       } else if (this.$route.query.id) {
-        myParams += `&agent_id=${this.$route.query.id}`;
+        myParams += `&agent_id=${this.$route.query.id}`
       }
-      this.listLoading = true;
+      this.listLoading = true
       getOrders(myParams).then((res) => {
         if (res.err_code == 0) {
-          this.modelPageOptions.total = res.data.total;
-          this.dataList = res.data.orders;
-          this.totalData = res.data.statistics;
-          this.listLoading = false;
+          this.modelPageOptions.total = res.data.total
+          this.dataList = res.data.orders
+          this.totalData = res.data.statistics
+          this.listLoading = false
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .blue {

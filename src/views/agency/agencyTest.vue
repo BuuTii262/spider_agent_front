@@ -1,20 +1,20 @@
 <template>
-  <CommonAgentList :data="data"></CommonAgentList>
+  <CommonAgentList :data="data" />
 </template>
 
 <script>
-import CommonAgentList from "./commonAgentList";
-import { getAgencyList } from "@/api/agency";
+import CommonAgentList from './commonAgentList'
+import { getAgencyList } from '@/api/agency'
 
 export default {
   components: {
-    CommonAgentList,
+    CommonAgentList
   },
   filters: {},
   data() {
     return {
-      data: "?is_test=1",
-    };
-  },
-};
+      data: '?is_test=1'
+    }
+  }
+}
 </script>

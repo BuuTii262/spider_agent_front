@@ -19,7 +19,7 @@
           :base-path="route.path"
         />
         <el-menu-item style="position: absolute; top: 900px">
-          <i class="el-icon-watch"></i>
+          <i class="el-icon-watch" />
           <span>{{ realTime }}</span>
         </el-menu-item>
       </el-menu>
@@ -28,71 +28,71 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Logo from "./Logo";
-import SidebarItem from "./SidebarItem";
-import variables from "@/styles/variables.scss";
-import { getTimeZone } from "@/api/agency";
+import { mapGetters } from 'vuex'
+import Logo from './Logo'
+import SidebarItem from './SidebarItem'
+import variables from '@/styles/variables.scss'
+import { getTimeZone } from '@/api/agency'
 
 export default {
   components: { SidebarItem, Logo },
   data() {
     return {
-      realTime: "",
-      TimeZone: "",
-    };
+      realTime: '',
+      TimeZone: ''
+    }
   },
   mounted() {
-    setInterval(() => this.loadRealTime(this.zone), 1000);
+    setInterval(() => this.loadRealTime(this.zone), 1000)
   },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters(['sidebar']),
     routes() {
-      return this.$router.options.routes;
+      return this.$router.options.routes
     },
     activeMenu() {
-      const route = this.$route;
-      const { meta, path } = route;
+      const route = this.$route
+      const { meta, path } = route
       if (meta.activeMenu) {
-        return meta.activeMenu;
+        return meta.activeMenu
       }
-      return path;
+      return path
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo;
+      return this.$store.state.settings.sidebarLogo
     },
     variables() {
-      return variables;
+      return variables
     },
     isCollapse() {
-      return !this.sidebar.opened;
-    },
+      return !this.sidebar.opened
+    }
   },
   methods: {
     getTime() {
       getTimeZone().then((res) => {
         if (res.err_code == 0) {
-          this.TimeZone = res.data.zone;
-          console.log(this.TimeZone);
+          this.TimeZone = res.data.zone
+          console.log(this.TimeZone)
         }
-      });
+      })
     },
     loadRealTime(zone) {
-      let options = {
-          timeZone: zone,
-          // year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-        },
-        formatter = new Intl.DateTimeFormat("zh-cn", options);
+      const options = {
+        timeZone: zone,
+        // year: "numeric",
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      }
+      const formatter = new Intl.DateTimeFormat('zh-cn', options)
 
-      this.realTime = formatter.format(new Date());
-    },
-  },
-};
+      this.realTime = formatter.format(new Date())
+    }
+  }
+}
 </script>
 <style scoped>
 .clock {

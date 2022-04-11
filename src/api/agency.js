@@ -5,10 +5,10 @@ export function getAgencyList(data) {
   console.log(20)
   return request({
     url: '/agents/directs' + data,
-    method: 'get',
+    method: 'get'
   })
 }
-//代理转移
+// 代理转移
 export function agentTrans(data) {
   return request({
     url: '/agent/agent_trans',
@@ -16,7 +16,7 @@ export function agentTrans(data) {
     data
   })
 }
-//修改密码
+// 修改密码
 export function changePsw(data) {
   return request({
     url: '/agent/agent_change_pass',
@@ -24,7 +24,7 @@ export function changePsw(data) {
     data
   })
 }
-//普通会员转成自己的代理
+// 普通会员转成自己的代理
 export function agentToagent(data) {
   return request({
     url: '/agent/agent_user2agent',
@@ -32,7 +32,7 @@ export function agentToagent(data) {
     data
   })
 }
-//添加代理
+// 添加代理
 export function addAgent(data) {
   return request({
     url: '/agent/agent_add',
@@ -54,30 +54,30 @@ export function getOrders(data) {
   console.log(20)
   return request({
     url: '/agents/orders' + data,
-    method: 'get',
+    method: 'get'
   })
 }
 export function getMembersDetail(data) {
   return request({
     url: '/agents/members' + data,
-    method: 'get',
+    method: 'get'
   })
 }
 export function getFinanceDetail(data) {
   return request({
     url: '/agents/financial' + data,
-    method: 'get',
+    method: 'get'
   })
 }
 export function getAgentOrders(data) {
   return request({
     url: '/agents/agent_orders' + data,
-    method: 'get',
+    method: 'get'
   })
 }
 export function getTimeZone() {
   return request({
     url: '/agents/timestamp',
-    method: 'get',
+    method: 'get'
   })
 }

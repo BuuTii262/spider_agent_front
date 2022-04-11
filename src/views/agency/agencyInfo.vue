@@ -13,8 +13,8 @@
       </div>
       <div class="search">
         <label>代理ID</label>
-        <el-input v-model="searchValue" placeholder="请输入代理ID" style="width: 200px"></el-input>
-        <el-button size="small" type="primary" @click="searchHandle()" style="width: 100px">搜索</el-button>
+        <el-input v-model="searchValue" placeholder="请输入代理ID" style="width: 200px" />
+        <el-button size="small" type="primary" style="width: 100px" @click="searchHandle()">搜索</el-button>
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
@@ -30,7 +30,7 @@
       </el-table-column>
       <el-table-column label="代理类型" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.AgentId !== 0 ? '官代' : '玩家'}}</span>
+          <span>{{ scope.row.AgentId !== 0 ? '官代' : '玩家' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="上级代理" align="center">
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { reportView } from "@/api/agency";
+import { reportView } from '@/api/agency'
 
 export default {
   data() {
@@ -74,53 +74,53 @@ export default {
       params: {
         page: 1,
         page_size: 10,
-        Id: null,
+        Id: null
       },
-      searchValue: "",
+      searchValue: '',
       totalData: {},
 
       modelPageOptions: {
-        page: 1, //列表 -- 当前页码
-        total: 0, //列表 -- 数据总数
-        pageSize: 10, //列表 -- 页码大小
-        pageList: [10, 20, 60, 80, 100], //列表 -- 当页显示多少数据
-      },
-    };
+        page: 1, // 列表 -- 当前页码
+        total: 0, // 列表 -- 数据总数
+        pageSize: 10, // 列表 -- 页码大小
+        pageList: [10, 20, 60, 80, 100] // 列表 -- 当页显示多少数据
+      }
+    }
   },
   created() {
-    this.params.Id = parseInt(this.$route.query.id) || null;
-    this.fetchData();
-    console.log(999);
-    console.log(this.$route.query.id);
+    this.params.Id = parseInt(this.$route.query.id) || null
+    this.fetchData()
+    console.log(999)
+    console.log(this.$route.query.id)
   },
   methods: {
-    //调整每页展示的条数
+    // 调整每页展示的条数
     handleSizeChange(val) {
-      this.modelPageOptions.pageSize = val;
-      this.getList();
+      this.modelPageOptions.pageSize = val
+      this.getList()
     },
 
-        //当前的页数
+    // 当前的页数
     handleCurrentChange(val) {
-      this.modelPageOptions.page = val;
-      this.getList();
+      this.modelPageOptions.page = val
+      this.getList()
     },
 
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       reportView(this.params).then((response) => {
-        this.listLoading = false;
-        this.modelPageOptions.total = response.Data.ListData.total;
-        this.totalData = response.Data.Sum;
-        this.list = response.Data.ListData.data;
-      });
+        this.listLoading = false
+        this.modelPageOptions.total = response.Data.ListData.total
+        this.totalData = response.Data.Sum
+        this.list = response.Data.ListData.data
+      })
     },
     searchHandle() {
-      this.params.id = parseInt(this.searchValue);
-      this.fetchData();
-    },
-  },
-};
+      this.params.id = parseInt(this.searchValue)
+      this.fetchData()
+    }
+  }
+}
 </script>
 <style scoped lang="scss">
 .top {

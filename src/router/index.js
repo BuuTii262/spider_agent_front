@@ -74,13 +74,13 @@ export const constantRoutes = [
         path: '/agencyTest',
         name: '测试列表',
         component: () => import('@/views/agency/agencyTest'),
-        meta: { title: '测试列表', icon: 'table' },
+        meta: { title: '测试列表', icon: 'table' }
       },
       {
         path: '/orderList',
         name: '订单列表',
         component: () => import('@/views/agency/orderList'),
-        meta: { title: '订单列表', icon: 'table' },
+        meta: { title: '订单列表', icon: 'table' }
       },
       {
         path: '/orderDetail',
@@ -107,8 +107,8 @@ export const constantRoutes = [
         path: '/agencyInviteCode',
         name: '邀请码',
         component: () => import('@/views/agency/agencyInviteCode'),
-        meta: { title: '邀请码', icon: 'dashboard' },
-      },
+        meta: { title: '邀请码', icon: 'dashboard' }
+      }
 
     ]
   },
