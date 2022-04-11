@@ -539,9 +539,11 @@ export default {
     },
 
     searchHandle() {
-      if (this.dateValue) {
+      localStorage.removeItem("searchDate");
+      if (this.dateValue && this.dateValue.length) {
         localStorage.setItem("searchDate", JSON.stringify(this.dateValue));
       }
+      // if(this.dateValue && this.dateValue.length)
       this.query.page = 1;
       this.fetchData();
     },
@@ -570,8 +572,9 @@ export default {
       // if (this.dateValue) {
       //   myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       // }
-      this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
-      if (this.dateValue) {
+      // this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
+      if (this.dateValue && this.dateValue.length) {
+        this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
         myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
       }
       this.listLoading = true;
@@ -586,6 +589,7 @@ export default {
             this.TotalAllData = [];
           } else {
             this.TotalAllData = this.dataList.concat(this.totalData);
+            // this.TotalAllData = this.dataList.concat(this.totalData);
           }
           this.TotalAllData = this.TotalAllData.reverse();
           console.log(this.TotalAllData);
