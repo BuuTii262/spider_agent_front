@@ -569,10 +569,6 @@ export default {
       if (this.addParams.id) {
         myParams += `&uid=${this.addParams.id}`;
       }
-      // if (this.dateValue) {
-      //   myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;
-      // }
-      // this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
       if (this.dateValue && this.dateValue.length) {
         this.dateValue = JSON.parse(localStorage.getItem("searchDate"));
         myParams += `&start_date=${this.dateValue[0]} 00:00:00&end_date=${this.dateValue[1]} 23:59:59`;

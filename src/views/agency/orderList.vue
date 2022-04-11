@@ -288,19 +288,19 @@ export default {
           label: "进行中",
         },
         {
-          value: "2",
+          value: "3",
           label: "完成",
         },
         {
-          value: "3",
+          value: "2",
           label: "已赎回",
         },
         {
-          value: "4",
+          value: "-3",
           label: "拒绝",
         },
         {
-          value: "5",
+          value: "-1",
           label: "待审核",
         },
       ];
